@@ -82,4 +82,4 @@ straightforward.
 
 Apache 2.0 licensed, see [LICENSE][LICENSE] file.
 
-[LICENSE]: ./LICENSE.txt
+[LICENSE]: ./LICENSE
