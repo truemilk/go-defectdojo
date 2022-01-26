@@ -72,14 +72,10 @@ func main() {
 
 ## Roadmap ##
 
-This library is being initially developed for personal use, so API methods will likely be implemented in the order that they are
-needed by that application. Eventually, it would be ideal to cover the entire
-DefectDojo API, so contributions are of course always welcome. The
-calling pattern is pretty well established, so adding new methods is relatively
-straightforward.
+This library is being initially developed for personal use, so API methods will likely be implemented in the order that they are needed. Eventually, it would be ideal to cover the entire DefectDojo API, so contributions are of course always welcome. The calling pattern is pretty well established, so adding new methods is relatively straightforward.
 
 ## License ##
 
-Apache 2.0 licensed, see [LICENSE][LICENSE] file.
+MIT licensed, see [LICENSE][LICENSE] file.
 
 [LICENSE]: ./LICENSE
