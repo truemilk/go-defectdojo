@@ -10,26 +10,26 @@ import (
 )
 
 type UserContactInfo struct {
-	Id                 int    `json:"id,omitempty"`
-	Title              string `json:"title,omitempty"`
-	PhoneNumber        string `json:"phone_number,omitempty"`
-	CellNumber         string `json:"cell_number,omitempty"`
-	TwitterUsername    string `json:"twitter_username,omitempty"`
-	GithubUsername     string `json:"github_username,omitempty"`
-	SlackUsername      string `json:"slack_username,omitempty"`
-	SlackUserID        string `json:"slack_user_id,omitempty"`
-	BlockExecution     bool   `json:"block_execution,omitempty"`
-	ForcePasswordReset bool   `json:"force_password_reset,omitempty"`
-	User               int    `json:"user,omitempty"`
+	Id                 *int    `json:"id,omitempty"`
+	Title              *string `json:"title,omitempty"`
+	PhoneNumber        *string `json:"phone_number,omitempty"`
+	CellNumber         *string `json:"cell_number,omitempty"`
+	TwitterUsername    *string `json:"twitter_username,omitempty"`
+	GithubUsername     *string `json:"github_username,omitempty"`
+	SlackUsername      *string `json:"slack_username,omitempty"`
+	SlackUserID        *string `json:"slack_user_id,omitempty"`
+	BlockExecution     *bool   `json:"block_execution,omitempty"`
+	ForcePasswordReset *bool   `json:"force_password_reset,omitempty"`
+	User               *int    `json:"user,omitempty"`
 }
 
 type UserContactInfos struct {
-	Count    int               `json:"count,omitempty"`
-	Next     string            `json:"next,omitempty"`
-	Previous string            `json:"previous,omitempty"`
-	Results  []UserContactInfo `json:"results,omitempty"`
-	Prefetch struct {
-		User map[string]User `json:"user,omitempty"`
+	Count    *int               `json:"count,omitempty"`
+	Next     *string            `json:"next,omitempty"`
+	Previous *string            `json:"previous,omitempty"`
+	Results  []*UserContactInfo `json:"results,omitempty"`
+	Prefetch *struct {
+		User *map[string]User `json:"user,omitempty"`
 	} `json:"prefetch,omitempty"`
 }
 
