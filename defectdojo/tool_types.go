@@ -91,7 +91,7 @@ func (c *Client) ToolTypesRead(ctx context.Context, id int) (*ToolType, error) {
 	return res, nil
 }
 
-func (c *Client) ToolTypesCreate(ctx context.Context, u ToolType) (*ToolType, error) {
+func (c *Client) ToolTypesCreate(ctx context.Context, u *ToolType) (*ToolType, error) {
 	path := fmt.Sprintf("%s/tool_types/", c.BaseURL)
 
 	postJSON, err := json.Marshal(u)
@@ -113,7 +113,7 @@ func (c *Client) ToolTypesCreate(ctx context.Context, u ToolType) (*ToolType, er
 	return res, nil
 }
 
-func (c *Client) ToolTypesUpdate(ctx context.Context, id int, u ToolType) (*ToolType, error) {
+func (c *Client) ToolTypesUpdate(ctx context.Context, id int, u *ToolType) (*ToolType, error) {
 	path := fmt.Sprintf("%s/tool_types/%d/", c.BaseURL, id)
 
 	postJSON, err := json.Marshal(u)
@@ -135,7 +135,7 @@ func (c *Client) ToolTypesUpdate(ctx context.Context, id int, u ToolType) (*Tool
 	return res, nil
 }
 
-func (c *Client) ToolTypesPartialUpdate(ctx context.Context, id int, u ToolType) (*ToolType, error) {
+func (c *Client) ToolTypesPartialUpdate(ctx context.Context, id int, u *ToolType) (*ToolType, error) {
 	path := fmt.Sprintf("%s/tool_types/%d/", c.BaseURL, id)
 
 	postJSON, err := json.Marshal(u)

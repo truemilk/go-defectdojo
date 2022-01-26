@@ -107,7 +107,7 @@ func (c *Client) UsersRead(ctx context.Context, id int) (*User, error) {
 	return res, nil
 }
 
-func (c *Client) UsersCreate(ctx context.Context, u User) (*User, error) {
+func (c *Client) UsersCreate(ctx context.Context, u *User) (*User, error) {
 	path := fmt.Sprintf("%s/users/", c.BaseURL)
 
 	postJSON, err := json.Marshal(u)
@@ -129,7 +129,7 @@ func (c *Client) UsersCreate(ctx context.Context, u User) (*User, error) {
 	return res, nil
 }
 
-func (c *Client) UsersUpdate(ctx context.Context, id int, u User) (*User, error) {
+func (c *Client) UsersUpdate(ctx context.Context, id int, u *User) (*User, error) {
 	path := fmt.Sprintf("%s/users/%d/", c.BaseURL, id)
 
 	postJSON, err := json.Marshal(u)
@@ -151,7 +151,7 @@ func (c *Client) UsersUpdate(ctx context.Context, id int, u User) (*User, error)
 	return res, nil
 }
 
-func (c *Client) UsersPartialUpdate(ctx context.Context, id int, u User) (*User, error) {
+func (c *Client) UsersPartialUpdate(ctx context.Context, id int, u *User) (*User, error) {
 	path := fmt.Sprintf("%s/users/%d/", c.BaseURL, id)
 
 	postJSON, err := json.Marshal(u)
