@@ -6,7 +6,7 @@ go-defectdojo is a Go client library for accessing the [DefectDojo API](https://
 
 - Go version 1.17 has been used for the initial development
 - Go mod is used for dependency management
-- The latest version of DefectDojo the APIs are compatible with is `v2.6.2`
+- The latest version of DefectDojo the APIs are have been tested with is `v2.6.2`
 
 ## Usage ##
 
