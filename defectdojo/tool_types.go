@@ -9,6 +9,10 @@ import (
 	"strings"
 )
 
+type ToolTypesService struct {
+	client *Client
+}
+
 type ToolType struct {
 	Id          *int    `json:"id,omitempty"`
 	Name        *string `json:"name,omitempty"`
@@ -55,8 +59,8 @@ func (o *ToolTypesOptions) ToString() string {
 	return optsString
 }
 
-func (c *Client) ToolTypesList(ctx context.Context, options *ToolTypesOptions) (*ToolTypes, error) {
-	path := fmt.Sprintf("%s/tool_types/%s", c.BaseURL, options.ToString())
+func (c *ToolTypesService) List(ctx context.Context, options *ToolTypesOptions) (*ToolTypes, error) {
+	path := fmt.Sprintf("%s/tool_types/%s", c.client.BaseURL, options.ToString())
 
 	req, err := http.NewRequest(http.MethodGet, path, nil)
 	if err != nil {
@@ -66,15 +70,15 @@ func (c *Client) ToolTypesList(ctx context.Context, options *ToolTypesOptions) (
 	req = req.WithContext(ctx)
 
 	res := ToolTypes{}
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 
 	return &res, nil
 }
 
-func (c *Client) ToolTypesRead(ctx context.Context, id int) (*ToolType, error) {
-	path := fmt.Sprintf("%s/tool_types/%d/", c.BaseURL, id)
+func (c *ToolTypesService) Read(ctx context.Context, id int) (*ToolType, error) {
+	path := fmt.Sprintf("%s/tool_types/%d/", c.client.BaseURL, id)
 
 	req, err := http.NewRequest(http.MethodGet, path, nil)
 	if err != nil {
@@ -84,15 +88,15 @@ func (c *Client) ToolTypesRead(ctx context.Context, id int) (*ToolType, error) {
 	req = req.WithContext(ctx)
 
 	res := new(ToolType)
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 
 	return res, nil
 }
 
-func (c *Client) ToolTypesCreate(ctx context.Context, u *ToolType) (*ToolType, error) {
-	path := fmt.Sprintf("%s/tool_types/", c.BaseURL)
+func (c *ToolTypesService) Create(ctx context.Context, u *ToolType) (*ToolType, error) {
+	path := fmt.Sprintf("%s/tool_types/", c.client.BaseURL)
 
 	postJSON, err := json.Marshal(u)
 	if err != nil {
@@ -106,15 +110,15 @@ func (c *Client) ToolTypesCreate(ctx context.Context, u *ToolType) (*ToolType, e
 	req = req.WithContext(ctx)
 
 	res := new(ToolType)
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 
 	return res, nil
 }
 
-func (c *Client) ToolTypesUpdate(ctx context.Context, id int, u *ToolType) (*ToolType, error) {
-	path := fmt.Sprintf("%s/tool_types/%d/", c.BaseURL, id)
+func (c *ToolTypesService) Update(ctx context.Context, id int, u *ToolType) (*ToolType, error) {
+	path := fmt.Sprintf("%s/tool_types/%d/", c.client.BaseURL, id)
 
 	postJSON, err := json.Marshal(u)
 	if err != nil {
@@ -128,15 +132,15 @@ func (c *Client) ToolTypesUpdate(ctx context.Context, id int, u *ToolType) (*Too
 	req = req.WithContext(ctx)
 
 	res := new(ToolType)
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 
 	return res, nil
 }
 
-func (c *Client) ToolTypesPartialUpdate(ctx context.Context, id int, u *ToolType) (*ToolType, error) {
-	path := fmt.Sprintf("%s/tool_types/%d/", c.BaseURL, id)
+func (c *ToolTypesService) PartialUpdate(ctx context.Context, id int, u *ToolType) (*ToolType, error) {
+	path := fmt.Sprintf("%s/tool_types/%d/", c.client.BaseURL, id)
 
 	postJSON, err := json.Marshal(u)
 	if err != nil {
@@ -150,15 +154,15 @@ func (c *Client) ToolTypesPartialUpdate(ctx context.Context, id int, u *ToolType
 	req = req.WithContext(ctx)
 
 	res := new(ToolType)
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 
 	return res, nil
 }
 
-func (c *Client) ToolTypesDelete(ctx context.Context, id int) (*ToolType, error) {
-	path := fmt.Sprintf("%s/tool_types/%d/", c.BaseURL, id)
+func (c *ToolTypesService) Delete(ctx context.Context, id int) (*ToolType, error) {
+	path := fmt.Sprintf("%s/tool_types/%d/", c.client.BaseURL, id)
 
 	req, err := http.NewRequest(http.MethodDelete, path, nil)
 	if err != nil {
@@ -168,7 +172,7 @@ func (c *Client) ToolTypesDelete(ctx context.Context, id int) (*ToolType, error)
 	req = req.WithContext(ctx)
 
 	res := new(ToolType)
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 

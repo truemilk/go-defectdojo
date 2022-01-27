@@ -10,6 +10,10 @@ import (
 	"time"
 )
 
+type EngagementsService struct {
+	client *Client
+}
+
 type Engagement struct {
 	Id                         *int      `json:"id,omitempty"`
 	Tags                       []*string `json:"tags,omitempty"`
@@ -49,13 +53,13 @@ type Engagement struct {
 	OrchestrationEngine        *int      `json:"orchestration_engine,omitempty"`
 	Notes                      []*struct {
 		Id     *int `json:"id,omitempty"`
-		Author struct {
+		Author *struct {
 			Id        *int    `json:"id,omitempty"`
 			Username  *string `json:"username,omitempty"`
 			FirstName *string `json:"first_name,omitempty"`
 			LastName  *string `json:"last_name,omitempty"`
 		} `json:"author,omitempty"`
-		Editor struct {
+		Editor *struct {
 			Id        *int    `json:"id,omitempty"`
 			Username  *string `json:"username,omitempty"`
 			FirstName *string `json:"first_name,omitempty"`
@@ -63,7 +67,7 @@ type Engagement struct {
 		} `json:"editor,omitempty"`
 		History []*struct {
 			Id            *int `json:"id,omitempty"`
-			CurrentEditor struct {
+			CurrentEditor *struct {
 				Id        *int    `json:"id,omitempty"`
 				Username  *string `json:"username,omitempty"`
 				FirstName *string `json:"first_name,omitempty"`
@@ -89,10 +93,10 @@ type Engagement struct {
 }
 
 type Engagements struct {
-	Count    int          `json:"count,omitempty"`
-	Next     string       `json:"next,omitempty"`
-	Previous string       `json:"previous,omitempty"`
-	Results  []Engagement `json:"results,omitempty"`
+	Count    *int          `json:"count,omitempty"`
+	Next     *string       `json:"next,omitempty"`
+	Previous *string       `json:"previous,omitempty"`
+	Results  []*Engagement `json:"results,omitempty"`
 }
 
 type EngagementsOptions struct {
@@ -116,8 +120,8 @@ func (o *EngagementsOptions) ToString() string {
 	return optsString
 }
 
-func (c *Client) EngagementsList(ctx context.Context, options *EngagementsOptions) (*Engagements, error) {
-	path := fmt.Sprintf("%s/engagements/%s", c.BaseURL, options.ToString())
+func (c *EngagementsService) List(ctx context.Context, options *EngagementsOptions) (*Engagements, error) {
+	path := fmt.Sprintf("%s/engagements/%s", c.client.BaseURL, options.ToString())
 
 	req, err := http.NewRequest(http.MethodGet, path, nil)
 	if err != nil {
@@ -127,15 +131,15 @@ func (c *Client) EngagementsList(ctx context.Context, options *EngagementsOption
 	req = req.WithContext(ctx)
 
 	res := Engagements{}
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 
 	return &res, nil
 }
 
-func (c *Client) EngagementsRead(ctx context.Context, id int) (*Engagement, error) {
-	path := fmt.Sprintf("%s/engagements/%d/", c.BaseURL, id)
+func (c *EngagementsService) Read(ctx context.Context, id int) (*Engagement, error) {
+	path := fmt.Sprintf("%s/engagements/%d/", c.client.BaseURL, id)
 
 	req, err := http.NewRequest(http.MethodGet, path, nil)
 	if err != nil {
@@ -145,15 +149,15 @@ func (c *Client) EngagementsRead(ctx context.Context, id int) (*Engagement, erro
 	req = req.WithContext(ctx)
 
 	res := new(Engagement)
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 
 	return res, nil
 }
 
-func (c *Client) EngagementsCreate(ctx context.Context, u *Engagement) (*Engagement, error) {
-	path := fmt.Sprintf("%s/engagements/", c.BaseURL)
+func (c *EngagementsService) Create(ctx context.Context, u *Engagement) (*Engagement, error) {
+	path := fmt.Sprintf("%s/engagements/", c.client.BaseURL)
 
 	postJSON, err := json.Marshal(u)
 	if err != nil {
@@ -167,7 +171,7 @@ func (c *Client) EngagementsCreate(ctx context.Context, u *Engagement) (*Engagem
 	req = req.WithContext(ctx)
 
 	res := new(Engagement)
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 

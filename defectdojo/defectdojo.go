@@ -18,6 +18,15 @@ type Client struct {
 	BaseURL    *url.URL
 	Token      string
 	HTTPClient *http.Client
+
+	DojoGroups       *DojoGroupsService
+	Engagements      *EngagementsService
+	ProductTypes     *ProductTypesService
+	Products         *ProductsService
+	ToolTypes        *ToolTypesService
+	UserContactInfos *UserContactInfosService
+	UserProfile      *UserProfileService
+	Users            *UsersService
 }
 
 type errorResponse struct {
@@ -44,11 +53,21 @@ func NewDojoClient(dojourl string, token string, httpClient *http.Client) (*Clie
 		return nil, fmt.Errorf("NewDojoClient: cannot parse URL: %w", err)
 	}
 
-	return &Client{
+	c := &Client{
 		BaseURL:    baseurl,
 		Token:      fmt.Sprintf("Token %s", token),
 		HTTPClient: httpClient,
-	}, nil
+	}
+
+	c.DojoGroups = &DojoGroupsService{client: c}
+	c.Engagements = &EngagementsService{client: c}
+	c.ProductTypes = &ProductTypesService{client: c}
+	c.Products = &ProductsService{client: c}
+	c.UserContactInfos = &UserContactInfosService{client: c}
+	c.UserProfile = &UserProfileService{client: c}
+	c.Users = &UsersService{client: c}
+
+	return c, nil
 }
 
 func (c *Client) sendRequest(req *http.Request, v interface{}) error {

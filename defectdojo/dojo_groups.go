@@ -1,5 +1,9 @@
 package defectdojo
 
+type DojoGroupsService struct {
+	client *Client
+}
+
 type DojoGroup struct {
 	Id          *int    `json:"id,omitempty"`
 	Name        *string `json:"name,omitempty"`

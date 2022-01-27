@@ -10,6 +10,10 @@ import (
 	"time"
 )
 
+type ProductTypesService struct {
+	client *Client
+}
+
 type ProductType struct {
 	Id                  *int       `json:"id,omitempty"`
 	Name                *string    `json:"name,omitempty"`
@@ -28,8 +32,8 @@ type ProductTypes struct {
 	Previous *string        `json:"previous,omitempty"`
 	Results  []*ProductType `json:"results,omitempty"`
 	Prefetch *struct {
-		AuthorizationGroups *map[string]DojoGroup `json:"authorization_groups,omitempty"`
-		Members             *map[string]User      `json:"members,omitempty"`
+		AuthorizationGroups map[string]DojoGroup `json:"authorization_groups,omitempty"`
+		Members             map[string]User      `json:"members,omitempty"`
 	} `json:"prefetch,omitempty"`
 }
 
@@ -82,8 +86,8 @@ func (o *ProductTypesOptions) ToString() string {
 	return optsString
 }
 
-func (c *Client) ProductTypesList(ctx context.Context, options *ProductTypesOptions) (*ProductTypes, error) {
-	path := fmt.Sprintf("%s/product_types/%s", c.BaseURL, options.ToString())
+func (c *ProductTypesService) ProductTypesList(ctx context.Context, options *ProductTypesOptions) (*ProductTypes, error) {
+	path := fmt.Sprintf("%s/product_types/%s", c.client.BaseURL, options.ToString())
 
 	req, err := http.NewRequest(http.MethodGet, path, nil)
 	if err != nil {
@@ -93,15 +97,15 @@ func (c *Client) ProductTypesList(ctx context.Context, options *ProductTypesOpti
 	req = req.WithContext(ctx)
 
 	res := ProductTypes{}
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 
 	return &res, nil
 }
 
-func (c *Client) ProductTypesRead(ctx context.Context, id int) (*ProductType, error) {
-	path := fmt.Sprintf("%s/product_types/%d/", c.BaseURL, id)
+func (c *ProductTypesService) ProductTypesRead(ctx context.Context, id int) (*ProductType, error) {
+	path := fmt.Sprintf("%s/product_types/%d/", c.client.BaseURL, id)
 
 	req, err := http.NewRequest(http.MethodGet, path, nil)
 	if err != nil {
@@ -111,15 +115,15 @@ func (c *Client) ProductTypesRead(ctx context.Context, id int) (*ProductType, er
 	req = req.WithContext(ctx)
 
 	res := new(ProductType)
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 
 	return res, nil
 }
 
-func (c *Client) ProductTypesCreate(ctx context.Context, u *ProductType) (*ProductType, error) {
-	path := fmt.Sprintf("%s/product_types/", c.BaseURL)
+func (c *ProductTypesService) ProductTypesCreate(ctx context.Context, u *ProductType) (*ProductType, error) {
+	path := fmt.Sprintf("%s/product_types/", c.client.BaseURL)
 
 	postJSON, err := json.Marshal(u)
 	if err != nil {
@@ -133,15 +137,15 @@ func (c *Client) ProductTypesCreate(ctx context.Context, u *ProductType) (*Produ
 	req = req.WithContext(ctx)
 
 	res := new(ProductType)
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 
 	return res, nil
 }
 
-func (c *Client) ProductTypesUpdate(ctx context.Context, id int, u *ProductType) (*ProductType, error) {
-	path := fmt.Sprintf("%s/product_types/%d/", c.BaseURL, id)
+func (c *ProductTypesService) ProductTypesUpdate(ctx context.Context, id int, u *ProductType) (*ProductType, error) {
+	path := fmt.Sprintf("%s/product_types/%d/", c.client.BaseURL, id)
 
 	postJSON, err := json.Marshal(u)
 	if err != nil {
@@ -155,15 +159,15 @@ func (c *Client) ProductTypesUpdate(ctx context.Context, id int, u *ProductType)
 	req = req.WithContext(ctx)
 
 	res := new(ProductType)
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 
 	return res, nil
 }
 
-func (c *Client) ProductTypesPartialUpdate(ctx context.Context, id int, u *ProductType) (*ProductType, error) {
-	path := fmt.Sprintf("%s/product_types/%d/", c.BaseURL, id)
+func (c *ProductTypesService) ProductTypesPartialUpdate(ctx context.Context, id int, u *ProductType) (*ProductType, error) {
+	path := fmt.Sprintf("%s/product_types/%d/", c.client.BaseURL, id)
 
 	postJSON, err := json.Marshal(u)
 	if err != nil {
@@ -177,15 +181,15 @@ func (c *Client) ProductTypesPartialUpdate(ctx context.Context, id int, u *Produ
 	req = req.WithContext(ctx)
 
 	res := new(ProductType)
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 
 	return res, nil
 }
 
-func (c *Client) ProductTypesDelete(ctx context.Context, id int) (*ProductType, error) {
-	path := fmt.Sprintf("%s/product_types/%d/", c.BaseURL, id)
+func (c *ProductTypesService) ProductTypesDelete(ctx context.Context, id int) (*ProductType, error) {
+	path := fmt.Sprintf("%s/product_types/%d/", c.client.BaseURL, id)
 
 	req, err := http.NewRequest(http.MethodDelete, path, nil)
 	if err != nil {
@@ -195,7 +199,7 @@ func (c *Client) ProductTypesDelete(ctx context.Context, id int) (*ProductType, 
 	req = req.WithContext(ctx)
 
 	res := new(ProductType)
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 
