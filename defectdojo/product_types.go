@@ -86,7 +86,7 @@ func (o *ProductTypesOptions) ToString() string {
 	return optsString
 }
 
-func (c *ProductTypesService) ProductTypesList(ctx context.Context, options *ProductTypesOptions) (*ProductTypes, error) {
+func (c *ProductTypesService) List(ctx context.Context, options *ProductTypesOptions) (*ProductTypes, error) {
 	path := fmt.Sprintf("%s/product_types/%s", c.client.BaseURL, options.ToString())
 
 	req, err := http.NewRequest(http.MethodGet, path, nil)
@@ -104,7 +104,7 @@ func (c *ProductTypesService) ProductTypesList(ctx context.Context, options *Pro
 	return &res, nil
 }
 
-func (c *ProductTypesService) ProductTypesRead(ctx context.Context, id int) (*ProductType, error) {
+func (c *ProductTypesService) Read(ctx context.Context, id int) (*ProductType, error) {
 	path := fmt.Sprintf("%s/product_types/%d/", c.client.BaseURL, id)
 
 	req, err := http.NewRequest(http.MethodGet, path, nil)
@@ -122,7 +122,7 @@ func (c *ProductTypesService) ProductTypesRead(ctx context.Context, id int) (*Pr
 	return res, nil
 }
 
-func (c *ProductTypesService) ProductTypesCreate(ctx context.Context, u *ProductType) (*ProductType, error) {
+func (c *ProductTypesService) Create(ctx context.Context, u *ProductType) (*ProductType, error) {
 	path := fmt.Sprintf("%s/product_types/", c.client.BaseURL)
 
 	postJSON, err := json.Marshal(u)
@@ -144,7 +144,7 @@ func (c *ProductTypesService) ProductTypesCreate(ctx context.Context, u *Product
 	return res, nil
 }
 
-func (c *ProductTypesService) ProductTypesUpdate(ctx context.Context, id int, u *ProductType) (*ProductType, error) {
+func (c *ProductTypesService) Update(ctx context.Context, id int, u *ProductType) (*ProductType, error) {
 	path := fmt.Sprintf("%s/product_types/%d/", c.client.BaseURL, id)
 
 	postJSON, err := json.Marshal(u)
@@ -166,7 +166,7 @@ func (c *ProductTypesService) ProductTypesUpdate(ctx context.Context, id int, u 
 	return res, nil
 }
 
-func (c *ProductTypesService) ProductTypesPartialUpdate(ctx context.Context, id int, u *ProductType) (*ProductType, error) {
+func (c *ProductTypesService) PartialUpdate(ctx context.Context, id int, u *ProductType) (*ProductType, error) {
 	path := fmt.Sprintf("%s/product_types/%d/", c.client.BaseURL, id)
 
 	postJSON, err := json.Marshal(u)
@@ -188,7 +188,7 @@ func (c *ProductTypesService) ProductTypesPartialUpdate(ctx context.Context, id 
 	return res, nil
 }
 
-func (c *ProductTypesService) ProductTypesDelete(ctx context.Context, id int) (*ProductType, error) {
+func (c *ProductTypesService) Delete(ctx context.Context, id int) (*ProductType, error) {
 	path := fmt.Sprintf("%s/product_types/%d/", c.client.BaseURL, id)
 
 	req, err := http.NewRequest(http.MethodDelete, path, nil)

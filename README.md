@@ -41,6 +41,7 @@ resp, err := dj.Technologies.Create(ctx, &defectdojo.Technology{
     User:         defectdojo.Int(1),
 })
 ```
+More detailed documentation is available at: https://pkg.go.dev/github.com/truemilk/go-defectdojo/defectdojo
 
 ### Authentication ###
 

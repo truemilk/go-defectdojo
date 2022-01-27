@@ -9,32 +9,33 @@ import (
 	"strings"
 )
 
-type ToolTypesService struct {
+type TestTypesService struct {
 	client *Client
 }
 
-type ToolType struct {
-	Id          *int    `json:"id,omitempty"`
-	Name        *string `json:"name,omitempty"`
-	Description *string `json:"description,omitempty"`
+type TestType struct {
+	Id          *int      `json:"id,omitempty"`
+	Tags        []*string `json:"tags,omitempty"`
+	Name        *string   `json:"name,omitempty"`
+	StaticTool  *bool     `json:"static_tool,omitempty"`
+	DynamicTool *bool     `json:"dynamic_tool,omitempty"`
+	Active      *bool     `json:"active,omitempty"`
 }
 
-type ToolTypes struct {
+type TestTypes struct {
 	Count    *int        `json:"count,omitempty"`
 	Next     *string     `json:"next,omitempty"`
 	Previous *string     `json:"previous,omitempty"`
-	Results  []*ToolType `json:"results,omitempty"`
+	Results  []*TestType `json:"results,omitempty"`
 }
 
-type ToolTypesOptions struct {
-	Limit       int
-	Offset      int
-	ID          int
-	Name        string
-	Description string
+type TestTypesOptions struct {
+	Limit  int
+	Offset int
+	Name   string
 }
 
-func (o *ToolTypesOptions) ToString() string {
+func (o *TestTypesOptions) ToString() string {
 	var opts []string
 	var optsString string
 	if o != nil {
@@ -45,22 +46,16 @@ func (o *ToolTypesOptions) ToString() string {
 		if o.Offset > 0 {
 			opts = append(opts, fmt.Sprintf("offset=%d", o.Offset))
 		}
-		if o.ID > 0 {
-			opts = append(opts, fmt.Sprintf("id=%d", o.ID))
-		}
 		if len(o.Name) > 0 {
 			opts = append(opts, fmt.Sprintf("name=%s", o.Name))
-		}
-		if len(o.Description) > 0 {
-			opts = append(opts, fmt.Sprintf("description=%s", o.Description))
 		}
 		optsString += strings.Join(opts, "&")
 	}
 	return optsString
 }
 
-func (c *ToolTypesService) List(ctx context.Context, options *ToolTypesOptions) (*ToolTypes, error) {
-	path := fmt.Sprintf("%s/tool_types/%s", c.client.BaseURL, options.ToString())
+func (c *TestTypesService) List(ctx context.Context, options *TestTypesOptions) (*TestTypes, error) {
+	path := fmt.Sprintf("%s/test_types/%s", c.client.BaseURL, options.ToString())
 
 	req, err := http.NewRequest(http.MethodGet, path, nil)
 	if err != nil {
@@ -69,7 +64,7 @@ func (c *ToolTypesService) List(ctx context.Context, options *ToolTypesOptions) 
 
 	req = req.WithContext(ctx)
 
-	res := ToolTypes{}
+	res := TestTypes{}
 	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
@@ -77,8 +72,8 @@ func (c *ToolTypesService) List(ctx context.Context, options *ToolTypesOptions) 
 	return &res, nil
 }
 
-func (c *ToolTypesService) Read(ctx context.Context, id int) (*ToolType, error) {
-	path := fmt.Sprintf("%s/tool_types/%d/", c.client.BaseURL, id)
+func (c *TestTypesService) Read(ctx context.Context, id int) (*TestType, error) {
+	path := fmt.Sprintf("%s/test_types/%d/", c.client.BaseURL, id)
 
 	req, err := http.NewRequest(http.MethodGet, path, nil)
 	if err != nil {
@@ -87,7 +82,7 @@ func (c *ToolTypesService) Read(ctx context.Context, id int) (*ToolType, error) 
 
 	req = req.WithContext(ctx)
 
-	res := new(ToolType)
+	res := new(TestType)
 	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
@@ -95,8 +90,8 @@ func (c *ToolTypesService) Read(ctx context.Context, id int) (*ToolType, error) 
 	return res, nil
 }
 
-func (c *ToolTypesService) Create(ctx context.Context, u *ToolType) (*ToolType, error) {
-	path := fmt.Sprintf("%s/tool_types/", c.client.BaseURL)
+func (c *TestTypesService) Create(ctx context.Context, u *TestType) (*TestType, error) {
+	path := fmt.Sprintf("%s/test_types/", c.client.BaseURL)
 
 	postJSON, err := json.Marshal(u)
 	if err != nil {
@@ -109,7 +104,7 @@ func (c *ToolTypesService) Create(ctx context.Context, u *ToolType) (*ToolType, 
 
 	req = req.WithContext(ctx)
 
-	res := new(ToolType)
+	res := new(TestType)
 	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
@@ -117,8 +112,8 @@ func (c *ToolTypesService) Create(ctx context.Context, u *ToolType) (*ToolType, 
 	return res, nil
 }
 
-func (c *ToolTypesService) Update(ctx context.Context, id int, u *ToolType) (*ToolType, error) {
-	path := fmt.Sprintf("%s/tool_types/%d/", c.client.BaseURL, id)
+func (c *TestTypesService) Update(ctx context.Context, id int, u *TestType) (*TestType, error) {
+	path := fmt.Sprintf("%s/test_types/%d/", c.client.BaseURL, id)
 
 	postJSON, err := json.Marshal(u)
 	if err != nil {
@@ -131,7 +126,7 @@ func (c *ToolTypesService) Update(ctx context.Context, id int, u *ToolType) (*To
 
 	req = req.WithContext(ctx)
 
-	res := new(ToolType)
+	res := new(TestType)
 	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
@@ -139,8 +134,8 @@ func (c *ToolTypesService) Update(ctx context.Context, id int, u *ToolType) (*To
 	return res, nil
 }
 
-func (c *ToolTypesService) PartialUpdate(ctx context.Context, id int, u *ToolType) (*ToolType, error) {
-	path := fmt.Sprintf("%s/tool_types/%d/", c.client.BaseURL, id)
+func (c *TestTypesService) PartialUpdate(ctx context.Context, id int, u *TestType) (*TestType, error) {
+	path := fmt.Sprintf("%s/test_types/%d/", c.client.BaseURL, id)
 
 	postJSON, err := json.Marshal(u)
 	if err != nil {
@@ -153,25 +148,7 @@ func (c *ToolTypesService) PartialUpdate(ctx context.Context, id int, u *ToolTyp
 
 	req = req.WithContext(ctx)
 
-	res := new(ToolType)
-	if err := c.client.sendRequest(req, &res); err != nil {
-		return nil, err
-	}
-
-	return res, nil
-}
-
-func (c *ToolTypesService) Delete(ctx context.Context, id int) (*ToolType, error) {
-	path := fmt.Sprintf("%s/tool_types/%d/", c.client.BaseURL, id)
-
-	req, err := http.NewRequest(http.MethodDelete, path, nil)
-	if err != nil {
-		return nil, err
-	}
-
-	req = req.WithContext(ctx)
-
-	res := new(ToolType)
+	res := new(TestType)
 	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
