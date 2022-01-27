@@ -9,6 +9,10 @@ import (
 	"strings"
 )
 
+type UserContactInfosService struct {
+	client *Client
+}
+
 type UserContactInfo struct {
 	Id                 *int    `json:"id,omitempty"`
 	Title              *string `json:"title,omitempty"`
@@ -29,7 +33,7 @@ type UserContactInfos struct {
 	Previous *string            `json:"previous,omitempty"`
 	Results  []*UserContactInfo `json:"results,omitempty"`
 	Prefetch *struct {
-		User *map[string]User `json:"user,omitempty"`
+		User map[string]User `json:"user,omitempty"`
 	} `json:"prefetch,omitempty"`
 }
 
@@ -95,8 +99,8 @@ func (o *UserContactInfosOptions) ToString() string {
 	return optsString
 }
 
-func (c *Client) UserContactInfosList(ctx context.Context, options *UserContactInfosOptions) (*UserContactInfos, error) {
-	path := fmt.Sprintf("%s/user_contact_infos/%s", c.BaseURL, options.ToString())
+func (c *UserContactInfosService) List(ctx context.Context, options *UserContactInfosOptions) (*UserContactInfos, error) {
+	path := fmt.Sprintf("%s/user_contact_infos/%s", c.client.BaseURL, options.ToString())
 
 	req, err := http.NewRequest(http.MethodGet, path, nil)
 	if err != nil {
@@ -106,15 +110,15 @@ func (c *Client) UserContactInfosList(ctx context.Context, options *UserContactI
 	req = req.WithContext(ctx)
 
 	res := UserContactInfos{}
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 
 	return &res, nil
 }
 
-func (c *Client) UserContactInfosRead(ctx context.Context, id int) (*UserContactInfo, error) {
-	path := fmt.Sprintf("%s/user_contact_infos/%d/", c.BaseURL, id)
+func (c *UserContactInfosService) Read(ctx context.Context, id int) (*UserContactInfo, error) {
+	path := fmt.Sprintf("%s/user_contact_infos/%d/", c.client.BaseURL, id)
 
 	req, err := http.NewRequest(http.MethodGet, path, nil)
 	if err != nil {
@@ -124,15 +128,15 @@ func (c *Client) UserContactInfosRead(ctx context.Context, id int) (*UserContact
 	req = req.WithContext(ctx)
 
 	res := new(UserContactInfo)
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 
 	return res, nil
 }
 
-func (c *Client) UserContactInfosCreate(ctx context.Context, u *UserContactInfo) (*UserContactInfo, error) {
-	path := fmt.Sprintf("%s/user_contact_infos/", c.BaseURL)
+func (c *UserContactInfosService) Create(ctx context.Context, u *UserContactInfo) (*UserContactInfo, error) {
+	path := fmt.Sprintf("%s/user_contact_infos/", c.client.BaseURL)
 
 	postJSON, err := json.Marshal(u)
 	if err != nil {
@@ -146,15 +150,15 @@ func (c *Client) UserContactInfosCreate(ctx context.Context, u *UserContactInfo)
 	req = req.WithContext(ctx)
 
 	res := new(UserContactInfo)
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 
 	return res, nil
 }
 
-func (c *Client) UserContactInfosUpdate(ctx context.Context, id int, u *UserContactInfo) (*UserContactInfo, error) {
-	path := fmt.Sprintf("%s/user_contact_infos/%d/", c.BaseURL, id)
+func (c *UserContactInfosService) Update(ctx context.Context, id int, u *UserContactInfo) (*UserContactInfo, error) {
+	path := fmt.Sprintf("%s/user_contact_infos/%d/", c.client.BaseURL, id)
 
 	postJSON, err := json.Marshal(u)
 	if err != nil {
@@ -168,15 +172,15 @@ func (c *Client) UserContactInfosUpdate(ctx context.Context, id int, u *UserCont
 	req = req.WithContext(ctx)
 
 	res := new(UserContactInfo)
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 
 	return res, nil
 }
 
-func (c *Client) UserContactInfosPartialUpdate(ctx context.Context, id int, u *UserContactInfo) (*UserContactInfo, error) {
-	path := fmt.Sprintf("%s/user_contact_infos/%d/", c.BaseURL, id)
+func (c *UserContactInfosService) PartialUpdate(ctx context.Context, id int, u *UserContactInfo) (*UserContactInfo, error) {
+	path := fmt.Sprintf("%s/user_contact_infos/%d/", c.client.BaseURL, id)
 
 	postJSON, err := json.Marshal(u)
 	if err != nil {
@@ -190,15 +194,15 @@ func (c *Client) UserContactInfosPartialUpdate(ctx context.Context, id int, u *U
 	req = req.WithContext(ctx)
 
 	res := new(UserContactInfo)
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 
 	return res, nil
 }
 
-func (c *Client) UserContactInfosDelete(ctx context.Context, id int) (*UserContactInfo, error) {
-	path := fmt.Sprintf("%s/user_contact_infos/%d/", c.BaseURL, id)
+func (c *UserContactInfosService) Delete(ctx context.Context, id int) (*UserContactInfo, error) {
+	path := fmt.Sprintf("%s/user_contact_infos/%d/", c.client.BaseURL, id)
 
 	req, err := http.NewRequest(http.MethodDelete, path, nil)
 	if err != nil {
@@ -208,7 +212,7 @@ func (c *Client) UserContactInfosDelete(ctx context.Context, id int) (*UserConta
 	req = req.WithContext(ctx)
 
 	res := new(UserContactInfo)
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 

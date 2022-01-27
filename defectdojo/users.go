@@ -10,6 +10,10 @@ import (
 	"time"
 )
 
+type UsersService struct {
+	client *Client
+}
+
 type User struct {
 	ID          *int       `json:"id,omitempty"`
 	Username    *string    `json:"username,omitempty"`
@@ -71,8 +75,8 @@ func (o *UsersOptions) ToString() string {
 	return optsString
 }
 
-func (c *Client) UsersList(ctx context.Context, options *UsersOptions) (*Users, error) {
-	path := fmt.Sprintf("%s/users/%s", c.BaseURL, options.ToString())
+func (c *UsersService) List(ctx context.Context, options *UsersOptions) (*Users, error) {
+	path := fmt.Sprintf("%s/users/%s", c.client.BaseURL, options.ToString())
 
 	req, err := http.NewRequest(http.MethodGet, path, nil)
 	if err != nil {
@@ -82,15 +86,15 @@ func (c *Client) UsersList(ctx context.Context, options *UsersOptions) (*Users, 
 	req = req.WithContext(ctx)
 
 	res := Users{}
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 
 	return &res, nil
 }
 
-func (c *Client) UsersRead(ctx context.Context, id int) (*User, error) {
-	path := fmt.Sprintf("%s/users/%d/", c.BaseURL, id)
+func (c *UsersService) Read(ctx context.Context, id int) (*User, error) {
+	path := fmt.Sprintf("%s/users/%d/", c.client.BaseURL, id)
 
 	req, err := http.NewRequest(http.MethodGet, path, nil)
 	if err != nil {
@@ -100,15 +104,15 @@ func (c *Client) UsersRead(ctx context.Context, id int) (*User, error) {
 	req = req.WithContext(ctx)
 
 	res := new(User)
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 
 	return res, nil
 }
 
-func (c *Client) UsersCreate(ctx context.Context, u *User) (*User, error) {
-	path := fmt.Sprintf("%s/users/", c.BaseURL)
+func (c *UsersService) Create(ctx context.Context, u *User) (*User, error) {
+	path := fmt.Sprintf("%s/users/", c.client.BaseURL)
 
 	postJSON, err := json.Marshal(u)
 	if err != nil {
@@ -122,15 +126,15 @@ func (c *Client) UsersCreate(ctx context.Context, u *User) (*User, error) {
 	req = req.WithContext(ctx)
 
 	res := new(User)
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 
 	return res, nil
 }
 
-func (c *Client) UsersUpdate(ctx context.Context, id int, u *User) (*User, error) {
-	path := fmt.Sprintf("%s/users/%d/", c.BaseURL, id)
+func (c *UsersService) Update(ctx context.Context, id int, u *User) (*User, error) {
+	path := fmt.Sprintf("%s/users/%d/", c.client.BaseURL, id)
 
 	postJSON, err := json.Marshal(u)
 	if err != nil {
@@ -144,15 +148,15 @@ func (c *Client) UsersUpdate(ctx context.Context, id int, u *User) (*User, error
 	req = req.WithContext(ctx)
 
 	res := new(User)
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 
 	return res, nil
 }
 
-func (c *Client) UsersPartialUpdate(ctx context.Context, id int, u *User) (*User, error) {
-	path := fmt.Sprintf("%s/users/%d/", c.BaseURL, id)
+func (c *UsersService) PartialUpdate(ctx context.Context, id int, u *User) (*User, error) {
+	path := fmt.Sprintf("%s/users/%d/", c.client.BaseURL, id)
 
 	postJSON, err := json.Marshal(u)
 	if err != nil {
@@ -166,15 +170,15 @@ func (c *Client) UsersPartialUpdate(ctx context.Context, id int, u *User) (*User
 	req = req.WithContext(ctx)
 
 	res := new(User)
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 
 	return res, nil
 }
 
-func (c *Client) UsersDelete(ctx context.Context, id int) (*User, error) {
-	path := fmt.Sprintf("%s/users/%d/", c.BaseURL, id)
+func (c *UsersService) Delete(ctx context.Context, id int) (*User, error) {
+	path := fmt.Sprintf("%s/users/%d/", c.client.BaseURL, id)
 
 	req, err := http.NewRequest(http.MethodDelete, path, nil)
 	if err != nil {
@@ -184,7 +188,7 @@ func (c *Client) UsersDelete(ctx context.Context, id int) (*User, error) {
 	req = req.WithContext(ctx)
 
 	res := new(User)
-	if err := c.sendRequest(req, &res); err != nil {
+	if err := c.client.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
 
