@@ -41,6 +41,22 @@ resp, err := dj.Technologies.Create(ctx, &defectdojo.Technology{
     User:         defectdojo.Int(1),
 })
 ```
+
+One exception to the pattern above is made for `import-scan`:
+
+```go
+params := &defectdojo.ImportScanMap{
+        "scan_type":           "Trivy Scan",
+        "engagement_name":     "Today's Engagement",
+        "product_name":        "A Secure Product",
+        "product_type_name":   "Core Infrastructure",
+        "auto_create_context": "true",
+        "file":                "/tmp/trivy-output.json",
+    }
+
+resp, err := dj.ImportScan.Create(ctx, params)
+```
+
 More detailed documentation is available at: https://pkg.go.dev/github.com/truemilk/go-defectdojo/defectdojo
 
 ### Authentication ###
