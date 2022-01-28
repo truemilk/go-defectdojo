@@ -11,7 +11,6 @@ import (
 const (
 	userAgent     = "go-defectdojo"
 	MediaTypeJson = "application/json"
-	//MediaTypeMultipart = "multipart/form-data"
 )
 
 type Client struct {
@@ -21,6 +20,7 @@ type Client struct {
 
 	DojoGroups       *DojoGroupsService
 	Engagements      *EngagementsService
+	ImportScan       *ImportScanService
 	ProductTypes     *ProductTypesService
 	Products         *ProductsService
 	Technologies     *TechnologiesService
@@ -63,6 +63,7 @@ func NewDojoClient(dojourl string, token string, httpClient *http.Client) (*Clie
 
 	c.DojoGroups = &DojoGroupsService{client: c}
 	c.Engagements = &EngagementsService{client: c}
+	c.ImportScan = &ImportScanService{client: c}
 	c.ProductTypes = &ProductTypesService{client: c}
 	c.Products = &ProductsService{client: c}
 	c.Technologies = &TechnologiesService{client: c}
@@ -76,10 +77,13 @@ func NewDojoClient(dojourl string, token string, httpClient *http.Client) (*Clie
 }
 
 func (c *Client) sendRequest(req *http.Request, v interface{}) error {
-	req.Header.Set("Content-Type", MediaTypeJson)
 	req.Header.Set("Accept", MediaTypeJson)
 	req.Header.Set("User-Agent", userAgent)
 	req.Header.Set("Authorization", c.Token)
+
+	if len(req.Header.Get("Content-Type")) == 0 {
+		req.Header.Set("Content-Type", MediaTypeJson)
+	}
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
