@@ -16,11 +16,7 @@ type Finding struct {
 	Id              *int      `json:"id,omitempty"`
 	Tags            []*string `json:"tags,omitempty"`
 	RequestResponse *struct {
-		ReqResp []*struct {
-			AdditionalProp1 *string `json:"additionalProp1,omitempty"`
-			AdditionalProp2 *string `json:"additionalProp2,omitempty"`
-			AdditionalProp3 *string `json:"additionalProp3,omitempty"`
-		} `json:"req_resp,omitempty"`
+		ReqResp map[string]string `json:"req_resp:,omitempty""`
 	} `json:"request_response,omitempty"`
 	AcceptedRisks []*struct {
 		Id                    *int       `json:"id,omitempty"`
