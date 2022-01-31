@@ -221,6 +221,10 @@ type Findings struct {
 type FindingsOptions struct {
 	Limit    int
 	Offset   int
+	Title    string
+	Severity string
+	Active   string
+	Verified string
 	Prefetch string
 }
 
@@ -234,6 +238,18 @@ func (o *FindingsOptions) ToString() string {
 		}
 		if o.Offset > 0 {
 			opts = append(opts, fmt.Sprintf("offset=%d", o.Offset))
+		}
+		if len(o.Title) > 0 {
+			opts = append(opts, fmt.Sprintf("title=%s", o.Title))
+		}
+		if len(o.Severity) > 0 {
+			opts = append(opts, fmt.Sprintf("severity=%s", o.Severity))
+		}
+		if len(o.Active) > 0 {
+			opts = append(opts, fmt.Sprintf("active=%s", o.Active))
+		}
+		if len(o.Verified) > 0 {
+			opts = append(opts, fmt.Sprintf("verified=%s", o.Verified))
 		}
 		if len(o.Prefetch) > 0 {
 			opts = append(opts, fmt.Sprintf("prefetch=%s", o.Prefetch))
