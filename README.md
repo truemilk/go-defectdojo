@@ -61,28 +61,30 @@ More detailed documentation is available at: https://pkg.go.dev/github.com/truem
 
 ### Authentication ###
 
-The go-defectdojo library handles authentication via Token. You can retrieve a valid __API v2 Key__ from within your DefectDojo instance.
+The go-defectdojo library handles authentication via Token. You can retrieve a valid _API v2 Key_ from within your DefectDojo instance.
 
-It is possible to retrieve the API key from an un-authenticated call to the `/api-token-auth/` endpoint, specifying valid username and password.
+It is also possible to retrieve the API key from an un-authenticated call to the `/api-token-auth/` endpoint, specifying valid username and password.
 For the purpose of this API call, the client can be instantiated with an empty string as the `token` parameter.
 
 ```go
 dj, _ := defectdojo.NewDojoClient(url, "", nil)
 
 resp, err := dj.ApiTokenAuth.Create(ctx, &defectdojo.AuthToken{
-    Username: defectdojo.String("admin"),
-    Password: defectdojo.String("<password>"),
+    Username: defectdojo.String("username"),
+    Password: defectdojo.String("password"),
 })
 
 fmt.Println(string(*resp.Token))
 ```
 
-The token can be later used to specify a new client for further authenticated API calls.
+The token can be later used to instantiate the client again for further authenticated API calls.
 
 
 ## Roadmap ##
 
-This library is being initially developed for personal use, so API methods will likely be implemented in the order that they are needed. Eventually, it would be ideal to cover the entire DefectDojo API, so contributions are of course always welcome. The calling pattern is pretty well established, so adding new methods is relatively straightforward.
+This library is being initially developed for personal use, so API methods will likely be implemented in the order that they are needed.
+Eventually, it would be ideal to cover the entire DefectDojo API, so contributions are of course always welcome.
+The calling pattern is pretty well established, so adding new methods is relatively straightforward.
 
 ## License ##
 
