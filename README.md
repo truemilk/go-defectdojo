@@ -14,7 +14,7 @@ go-defectdojo is a Go client library for accessing the [DefectDojo API](https://
 import "github.com/truemilk/go-defectdojo/defectdojo"
 ```
 
-Construct a new Defectdojo client:
+Define a new Defectdojo client:
 
 ```go
 url := os.Getenv("DOJO_URI")
@@ -61,7 +61,24 @@ More detailed documentation is available at: https://pkg.go.dev/github.com/truem
 
 ### Authentication ###
 
-The go-defectdojo library handles authentication via Token. You can retrieve a valid `API v2 Key` from within your DefectDojo instance.
+The go-defectdojo library handles authentication via Token. You can retrieve a valid __API v2 Key__ from within your DefectDojo instance.
+
+It is possible to retrieve the API key from an un-authenticated call to the `/api-token-auth/` endpoint, specifying valid username and password.
+For the purpose of this API call, the client can be instantiated with an empty string as the `token` parameter.
+
+```go
+dj, _ := defectdojo.NewDojoClient(url, "", nil)
+
+resp, err := dj.ApiTokenAuth.Create(ctx, &defectdojo.AuthToken{
+    Username: defectdojo.String("admin"),
+    Password: defectdojo.String("<password>"),
+})
+
+fmt.Println(string(*resp.Token))
+```
+
+The token can be later used to specify a new client for further authenticated API calls.
+
 
 ## Roadmap ##
 

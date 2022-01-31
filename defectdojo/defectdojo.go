@@ -18,6 +18,7 @@ type Client struct {
 	Token      string
 	HTTPClient *http.Client
 
+	ApiTokenAuth     *ApiTokenAuthService
 	DojoGroups       *DojoGroupsService
 	Engagements      *EngagementsService
 	Findings         *FindingsService
@@ -47,9 +48,6 @@ func NewDojoClient(dojourl string, token string, httpClient *http.Client) (*Clie
 	if len(dojourl) == 0 {
 		return nil, errors.New("NewDojoClient: cannot create client, URL string is empty")
 	}
-	if len(token) == 0 {
-		return nil, errors.New("NewDojoClient: cannot create client, TOKEN string is empty")
-	}
 
 	baseurl, err := url.Parse(dojourl + "/api/v2")
 	if err != nil {
@@ -58,10 +56,11 @@ func NewDojoClient(dojourl string, token string, httpClient *http.Client) (*Clie
 
 	c := &Client{
 		BaseURL:    baseurl,
-		Token:      fmt.Sprintf("Token %s", token),
+		Token:      token,
 		HTTPClient: httpClient,
 	}
 
+	c.ApiTokenAuth = &ApiTokenAuthService{client: c}
 	c.DojoGroups = &DojoGroupsService{client: c}
 	c.Engagements = &EngagementsService{client: c}
 	c.Findings = &FindingsService{client: c}
@@ -79,9 +78,12 @@ func NewDojoClient(dojourl string, token string, httpClient *http.Client) (*Clie
 }
 
 func (c *Client) sendRequest(req *http.Request, v interface{}) error {
-	req.Header.Set("Accept", mediaTypeJson)
 	req.Header.Set("User-Agent", userAgent)
-	req.Header.Set("Authorization", c.Token)
+	req.Header.Set("Accept", mediaTypeJson)
+
+	if len(c.Token) > 0 {
+		req.Header.Set("Authorization", fmt.Sprintf("Token %s", c.Token))
+	}
 
 	if len(req.Header.Get("Content-Type")) == 0 {
 		req.Header.Set("Content-Type", mediaTypeJson)
