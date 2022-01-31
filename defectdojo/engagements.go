@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
-	"time"
 )
 
 type EngagementsService struct {
@@ -51,40 +50,8 @@ type Engagement struct {
 	BuildServer                *int      `json:"build_server,omitempty"`
 	SourceCodeManagementServer *int      `json:"source_code_management_server,omitempty"`
 	OrchestrationEngine        *int      `json:"orchestration_engine,omitempty"`
-	Notes                      []*struct {
-		Id     *int `json:"id,omitempty"`
-		Author *struct {
-			Id        *int    `json:"id,omitempty"`
-			Username  *string `json:"username,omitempty"`
-			FirstName *string `json:"first_name,omitempty"`
-			LastName  *string `json:"last_name,omitempty"`
-		} `json:"author,omitempty"`
-		Editor *struct {
-			Id        *int    `json:"id,omitempty"`
-			Username  *string `json:"username,omitempty"`
-			FirstName *string `json:"first_name,omitempty"`
-			LastName  *string `json:"last_name,omitempty"`
-		} `json:"editor,omitempty"`
-		History []*struct {
-			Id            *int `json:"id,omitempty"`
-			CurrentEditor *struct {
-				Id        *int    `json:"id,omitempty"`
-				Username  *string `json:"username,omitempty"`
-				FirstName *string `json:"first_name,omitempty"`
-				LastName  *string `json:"last_name,omitempty"`
-			} `json:"current_editor,omitempty"`
-			Data     *string    `json:"data,omitempty"`
-			Time     *time.Time `json:"time,omitempty"`
-			NoteType *int       `json:"note_type,omitempty"`
-		} `json:"history,omitempty"`
-		Entry    *string    `json:"entry,omitempty"`
-		Date     *time.Time `json:"date,omitempty"`
-		Private  *bool      `json:"private,omitempty"`
-		Edited   *bool      `json:"edited,omitempty"`
-		EditTime *time.Time `json:"edit_time,omitempty"`
-		NoteType *int       `json:"note_type,omitempty"`
-	} `json:"notes,omitempty"`
-	Files []*struct {
+	Notes                      []*Note   `json:"notes,omitempty"`
+	Files                      []*struct {
 		Id    *int    `json:"id,omitempty"`
 		File  *string `json:"file,omitempty"`
 		Title *string `json:"title,omitempty"`
