@@ -57,7 +57,7 @@ params := &defectdojo.ImportScanMap{
 resp, err := dj.ImportScan.Create(ctx, params)
 ```
 
-More detailed documentation is available at: https://pkg.go.dev/github.com/truemilk/go-defectdojo
+More detailed documentation is available at: https://pkg.go.dev/github.com/truemilk/go-defectdojo/defectdojo
 
 ### Authentication ###
 
