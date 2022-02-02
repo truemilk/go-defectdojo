@@ -1,3 +1,4 @@
+// custom demonstrates how to specify a custom HTTP transport and a custom Context with the requests.
 package main
 
 import (
@@ -28,28 +29,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	ctx := context.Background()
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
 
-	params := &defectdojo.ImportScanMap{
-		"scan_type":           "Trivy Scan",
-		"engagement_name":     "New Engagement",
-		"product_name":        "New Product",
-		"product_type_name":   "New Product Type",
-		"auto_create_context": "true",
-		"file":                "/tmp/trivy-out.json",
-	}
-	_, err = dj.ImportScan.Create(ctx, params)
-	if err != nil {
-		fmt.Println("main.go:", err)
-		return
-	}
-
-	opts := &defectdojo.FindingsOptions{
-		Limit:    5,
-		Offset:   1,
-		Prefetch: "duplicate_finding",
-	}
-	resp, err := dj.Findings.List(ctx, opts)
+	resp, err := dj.Users.List(ctx, nil)
 	if err != nil {
 		fmt.Println("main.go:", err)
 		return
