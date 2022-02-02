@@ -10,11 +10,13 @@ go-defectdojo is a Go client library for accessing the [DefectDojo API](https://
 
 ## Basic Usage ##
 
-Import the module in your source code, create a client and reference the provided methods to call the API.
+Import the module in your source code:
 
 ```go
 import "github.com/truemilk/go-defectdojo/defectdojo"
 ```
+
+Create a client:
 
 ```go
 url := os.Getenv("DOJO_URI")
@@ -29,6 +31,8 @@ client := &http.Client{
 
 dj, err := defectdojo.NewDojoClient(url, token, client)
 ```
+
+Reference the provided methods to call the API:
 
 ```go
 ctx := context.Background()
