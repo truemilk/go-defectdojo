@@ -44,7 +44,7 @@ resp, err := dj.Findings.List(ctx, opts)
 
 More detailed documentation is available at: https://pkg.go.dev/github.com/truemilk/go-defectdojo/defectdojo
 
-For additional usage examples, brouse the [example][example] folder.
+For additional usage examples, brouse the [example](example) folder.
 
 ## Roadmap ##
 
