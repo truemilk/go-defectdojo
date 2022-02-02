@@ -1,4 +1,4 @@
-// import scan demonstrates the process of uploading a scan report into the DefectDojo platform.
+// importscan demonstrates the process of uploading a scan report into the DefectDojo platform.
 //
 // Reports to import are defined by an ImportScanMap structure that defines all parameters in string format.
 package main
