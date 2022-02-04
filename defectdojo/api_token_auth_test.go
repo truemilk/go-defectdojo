@@ -2,37 +2,63 @@ package defectdojo
 
 import (
 	"context"
-	"encoding/json"
+	"fmt"
+	"net/http"
+	"net/http/httptest"
 	"testing"
 
-	"github.com/jarcoal/httpmock"
-	"github.com/stretchr/testify/assert"
+	"github.com/google/go-cmp/cmp"
 )
 
 func TestApiTokenAuthService_Create(t *testing.T) {
-	httpmock.Activate()
-	defer httpmock.DeactivateAndReset()
 
-	object := AuthToken{
-		Username: nil,
-		Password: nil,
-		Token:    String("token"),
-	}
-	response, _ := httpmock.NewJsonResponder(200, object)
-	httpmock.RegisterResponder("POST", "server/api/v2/api-token-auth/", response)
+	t.Run("get token", func(t *testing.T) {
+		response := `{"token":"token"}`
 
-	dj, err := NewDojoClient("server", "", nil)
-	assert.Nil(t, err)
-	ctx := context.Background()
+		expected := AuthToken{Token: String("token")}
 
-	r, err := dj.ApiTokenAuth.Create(ctx, &AuthToken{
-		Username: String("username"),
-		Password: String("password"),
+		ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			fmt.Fprintln(w, response)
+		}))
+		defer ts.Close()
+
+		dj, err := NewDojoClient(ts.URL, "", nil)
+		if !cmp.Equal(err, nil) {
+			t.Errorf("error")
+		}
+
+		actual, err := dj.ApiTokenAuth.Create(context.Background(), &AuthToken{
+			Username: String("username"),
+			Password: String("password"),
+		})
+		if !cmp.Equal(err, nil) {
+			t.Errorf("error")
+		}
+
+		if !cmp.Equal(actual, &expected) {
+			t.Errorf("should be the same")
+		}
 	})
-	assert.Nil(t, err)
-	b, err := json.Marshal(r)
-	assert.Nil(t, err)
 
-	actual := string(b)
-	assert.Equal(t, `{"token":"token"}`, actual)
+	t.Run("malformed json", func(t *testing.T) {
+		response := `{"token":"token"`
+
+		ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			fmt.Fprintln(w, response)
+		}))
+		defer ts.Close()
+
+		dj, err := NewDojoClient(ts.URL, "", nil)
+		if !cmp.Equal(err, nil) {
+			t.Errorf("error")
+		}
+
+		_, err = dj.ApiTokenAuth.Create(context.Background(), &AuthToken{
+			Username: String("username"),
+			Password: String("password"),
+		})
+		if cmp.Equal(err, nil) {
+			t.Errorf("supposed to get an error")
+		}
+	})
 }

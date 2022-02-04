@@ -34,13 +34,13 @@ func main() {
 
 	resp, err := dj.Users.List(ctx, nil)
 	if err != nil {
-		fmt.Println("main.go:", err)
+		fmt.Println("main:", err)
 		return
 	}
 
 	b, err := json.Marshal(resp)
 	if err != nil {
-		fmt.Println("main.go:", err)
+		fmt.Println("main:", err)
 		return
 	}
 

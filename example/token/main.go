@@ -31,13 +31,13 @@ func main() {
 		Password: defectdojo.String("1Defectdojo@demo#appsec"),
 	})
 	if err != nil {
-		fmt.Println("main.go:", err)
+		fmt.Println("main:", err)
 		return
 	}
 
 	b, err := json.Marshal(resp.Token)
 	if err != nil {
-		fmt.Println("main.go:", err)
+		fmt.Println("main:", err)
 		return
 	}
 
