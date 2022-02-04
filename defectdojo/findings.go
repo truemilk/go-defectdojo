@@ -16,7 +16,7 @@ type Finding struct {
 	Id              *int      `json:"id,omitempty"`
 	Tags            []*string `json:"tags,omitempty"`
 	RequestResponse *struct {
-		ReqResp map[string]string `json:"req_resp,omitempty"`
+		ReqResp []map[string]string `json:"req_resp,omitempty"`
 	} `json:"request_response,omitempty"`
 	AcceptedRisks []*struct {
 		Id                    *int       `json:"id,omitempty"`
