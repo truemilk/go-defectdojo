@@ -12,53 +12,27 @@ import (
 
 func TestApiTokenAuthService_Create(t *testing.T) {
 
-	t.Run("get token", func(t *testing.T) {
-		response := `{"token":"token"}`
+	response := `{"token":"token"}`
 
-		expected := AuthToken{Token: String("token")}
+	expected := AuthToken{Token: String("token")}
 
-		ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			fmt.Fprintln(w, response)
-		}))
-		defer ts.Close()
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusCreated)
+		fmt.Fprintln(w, response)
+	}))
+	defer ts.Close()
 
-		dj, err := NewDojoClient(ts.URL, "", nil)
-		if !cmp.Equal(err, nil) {
-			t.Errorf("error")
-		}
+	dj, _ := NewDojoClient(ts.URL, "", nil)
 
-		actual, err := dj.ApiTokenAuth.Create(context.Background(), &AuthToken{
-			Username: String("username"),
-			Password: String("password"),
-		})
-		if !cmp.Equal(err, nil) {
-			t.Errorf("error")
-		}
-
-		if !cmp.Equal(actual, &expected) {
-			t.Errorf("should be the same")
-		}
+	actual, err := dj.ApiTokenAuth.Create(context.Background(), &AuthToken{
+		Username: String("username"),
+		Password: String("password"),
 	})
+	if !cmp.Equal(err, nil) {
+		t.Errorf("error: %s", err)
+	}
 
-	t.Run("malformed json", func(t *testing.T) {
-		response := `{"token":"token"`
-
-		ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			fmt.Fprintln(w, response)
-		}))
-		defer ts.Close()
-
-		dj, err := NewDojoClient(ts.URL, "", nil)
-		if !cmp.Equal(err, nil) {
-			t.Errorf("error")
-		}
-
-		_, err = dj.ApiTokenAuth.Create(context.Background(), &AuthToken{
-			Username: String("username"),
-			Password: String("password"),
-		})
-		if cmp.Equal(err, nil) {
-			t.Errorf("supposed to get an error")
-		}
-	})
+	if !cmp.Equal(actual, &expected) {
+		t.Errorf("should have been equal, %+v, %+v", actual, &expected)
+	}
 }
