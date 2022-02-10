@@ -15,7 +15,7 @@ type TestTypesService struct {
 
 type TestType struct {
 	Id          *int      `json:"id,omitempty"`
-	Tags        []*string `json:"tags,omitempty"`
+	Tags        *[]string `json:"tags,omitempty"`
 	Name        *string   `json:"name,omitempty"`
 	StaticTool  *bool     `json:"static_tool,omitempty"`
 	DynamicTool *bool     `json:"dynamic_tool,omitempty"`
@@ -26,7 +26,7 @@ type TestTypes struct {
 	Count    *int        `json:"count,omitempty"`
 	Next     *string     `json:"next,omitempty"`
 	Previous *string     `json:"previous,omitempty"`
-	Results  []*TestType `json:"results,omitempty"`
+	Results  *[]TestType `json:"results,omitempty"`
 }
 
 type TestTypesOptions struct {

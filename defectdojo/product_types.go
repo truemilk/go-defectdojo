@@ -22,18 +22,18 @@ type ProductType struct {
 	KeyProduct          *bool      `json:"key_product,omitempty"`
 	Updated             *time.Time `json:"updated,omitempty"`
 	Created             *time.Time `json:"created,omitempty"`
-	Members             []*int     `json:"members,omitempty"`
-	AuthorizationGroups []*int     `json:"authorization_groups,omitempty"`
+	Members             *[]int     `json:"members,omitempty"`
+	AuthorizationGroups *[]int     `json:"authorization_groups,omitempty"`
 }
 
 type ProductTypes struct {
 	Count    *int           `json:"count,omitempty"`
 	Next     *string        `json:"next,omitempty"`
 	Previous *string        `json:"previous,omitempty"`
-	Results  []*ProductType `json:"results,omitempty"`
+	Results  *[]ProductType `json:"results,omitempty"`
 	Prefetch *struct {
-		AuthorizationGroups map[string]DojoGroup `json:"authorization_groups,omitempty"`
-		Members             map[string]User      `json:"members,omitempty"`
+		AuthorizationGroups *map[string]DojoGroup `json:"authorization_groups,omitempty"`
+		Members             *map[string]User      `json:"members,omitempty"`
 	} `json:"prefetch,omitempty"`
 }
 

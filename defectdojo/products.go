@@ -17,9 +17,9 @@ type ProductsService struct {
 type Product struct {
 	ID            *int      `json:"id,omitempty"`
 	FindingsCount *int      `json:"findings_count,omitempty"`
-	FindingsList  []*int    `json:"findings_list,omitempty"`
-	Tags          []*string `json:"tags,omitempty"`
-	ProductMeta   []*struct {
+	FindingsList  *[]int    `json:"findings_list,omitempty"`
+	Tags          *[]string `json:"tags,omitempty"`
+	ProductMeta   *[]struct {
 		Name  *string `json:"name,omitempty"`
 		Value *string `json:"value,omitempty"`
 	} `json:"product_meta,omitempty"`
@@ -41,23 +41,23 @@ type Product struct {
 	TechnicalContact           *int       `json:"technical_contact,omitempty"`
 	TeamManager                *int       `json:"team_manager,omitempty"`
 	ProdType                   *int       `json:"prod_type,omitempty"`
-	Members                    []*int     `json:"members,omitempty"`
-	AuthorizationGroups        []*int     `json:"authorization_groups,omitempty"`
-	Regulations                []*int     `json:"regulations,omitempty"`
+	Members                    *[]int     `json:"members,omitempty"`
+	AuthorizationGroups        *[]int     `json:"authorization_groups,omitempty"`
+	Regulations                *[]int     `json:"regulations,omitempty"`
 }
 
 type Products struct {
 	Count    *int       `json:"count,omitempty"`
 	Next     *string    `json:"next,omitempty"`
 	Previous *string    `json:"previous,omitempty"`
-	Results  []*Product `json:"results,omitempty"`
+	Results  *[]Product `json:"results,omitempty"`
 	Prefetch *struct {
-		AuthorizationGroups map[string]DojoGroup   `json:"authorization_groups,omitempty"`
-		Members             map[string]User        `json:"members,omitempty"`
-		ProdType            map[string]ProductType `json:"prod_type,omitempty"`
-		ProductManager      map[string]User        `json:"product_manager,omitempty"`
-		TeamManager         map[string]User        `json:"team_manager,omitempty"`
-		TechnicalContact    map[string]User        `json:"technical_contact,omitempty"`
+		AuthorizationGroups *map[string]DojoGroup   `json:"authorization_groups,omitempty"`
+		Members             *map[string]User        `json:"members,omitempty"`
+		ProdType            *map[string]ProductType `json:"prod_type,omitempty"`
+		ProductManager      *map[string]User        `json:"product_manager,omitempty"`
+		TeamManager         *map[string]User        `json:"team_manager,omitempty"`
+		TechnicalContact    *map[string]User        `json:"technical_contact,omitempty"`
 	} `json:"prefetch,omitempty"`
 }
 

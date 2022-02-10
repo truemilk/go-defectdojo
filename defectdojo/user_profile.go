@@ -19,19 +19,19 @@ type UserProfile struct {
 		Group *int `json:"group,omitempty"`
 		Role  *int `json:"role,omitempty"`
 	} `json:"global_role,omitempty"`
-	DojoGroupMember []*struct {
+	DojoGroupMember *[]struct {
 		Id    *int `json:"id,omitempty"`
 		Group *int `json:"group,omitempty"`
 		User  *int `json:"user,omitempty"`
 		Role  *int `json:"role,omitempty"`
 	} `json:"dojo_group_member,omitempty"`
-	ProductTypeMember []*struct {
+	ProductTypeMember *[]struct {
 		Id          *int `json:"id,omitempty"`
 		ProductType *int `json:"product_type,omitempty"`
 		User        *int `json:"user,omitempty"`
 		Role        *int `json:"role,omitempty"`
 	} `json:"product_type_member,omitempty"`
-	ProductMember []*struct {
+	ProductMember *[]struct {
 		Id      *int `json:"id,omitempty"`
 		Product *int `json:"product,omitempty"`
 		User    *int `json:"user,omitempty"`

@@ -16,7 +16,7 @@ type TechnologiesService struct {
 
 type Technology struct {
 	Id           *int       `json:"id,omitempty"`
-	Tags         []*string  `json:"tags,omitempty"`
+	Tags         *[]string  `json:"tags,omitempty"`
 	Name         *string    `json:"name,omitempty"`
 	Confidence   *int       `json:"confidence,omitempty"`
 	Version      *string    `json:"version,omitempty"`
@@ -32,7 +32,7 @@ type Technologies struct {
 	Count    *int          `json:"count,omitempty"`
 	Next     *string       `json:"next,omitempty"`
 	Previous *string       `json:"previous,omitempty"`
-	Results  []*Technology `json:"results,omitempty"`
+	Results  *[]Technology `json:"results,omitempty"`
 }
 
 type TechnologiesOptions struct {

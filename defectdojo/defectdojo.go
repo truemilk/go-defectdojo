@@ -35,10 +35,10 @@ type Client struct {
 }
 
 type errorResponse struct {
-	Code        int      `json:"code,omitempty"`
-	Detail      string   `json:"detail,omitempty"`
-	Description []string `json:"description,omitempty"`
-	Message     string   `json:"message,omitempty"`
+	Code        *int      `json:"code,omitempty"`
+	Detail      *string   `json:"detail,omitempty"`
+	Description *[]string `json:"description,omitempty"`
+	Message     *string   `json:"message,omitempty"`
 }
 
 func NewDojoClient(dojourl string, token string, httpClient *http.Client) (*Client, error) {
@@ -99,7 +99,7 @@ func (c *Client) sendRequest(req *http.Request, v interface{}) error {
 
 	if res.StatusCode < http.StatusOK || res.StatusCode >= http.StatusBadRequest {
 		errorResp := errorResponse{
-			Code: res.StatusCode,
+			Code: &res.StatusCode,
 		}
 		if err = json.NewDecoder(res.Body).Decode(&errorResp); err == nil {
 			return fmt.Errorf("sendRequest: API error: %v", errorResp)

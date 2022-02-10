@@ -14,11 +14,11 @@ type FindingsService struct {
 
 type Finding struct {
 	Id              *int      `json:"id,omitempty"`
-	Tags            []*string `json:"tags,omitempty"`
+	Tags            *[]string `json:"tags,omitempty"`
 	RequestResponse *struct {
-		ReqResp []map[string]string `json:"req_resp,omitempty"`
+		ReqResp *[]map[string]string `json:"req_resp,omitempty"`
 	} `json:"request_response,omitempty"`
-	AcceptedRisks []*struct {
+	AcceptedRisks *[]struct {
 		Id                    *int       `json:"id,omitempty"`
 		Name                  *string    `json:"name,omitempty"`
 		Recommendation        *string    `json:"recommendation,omitempty"`
@@ -35,13 +35,13 @@ type Finding struct {
 		Created               *time.Time `json:"created,omitempty"`
 		Updated               *time.Time `json:"updated,omitempty"`
 		Owner                 *int       `json:"owner,omitempty"`
-		AcceptedFindings      []*int     `json:"accepted_findings,omitempty"`
-		Notes                 []*int     `json:"notes,omitempty"`
+		AcceptedFindings      *[]int     `json:"accepted_findings,omitempty"`
+		Notes                 *[]int     `json:"notes,omitempty"`
 	} `json:"accepted_risks,omitempty"`
 	PushToJira       *bool `json:"push_to_jira,omitempty"`
 	Age              *int  `json:"age,omitempty"`
 	SlaDaysRemaining *int  `json:"sla_days_remaining,omitempty"`
-	FindingMeta      []*struct {
+	FindingMeta      *[]struct {
 		Name  *string `json:"name,omitempty"`
 		Value *string `json:"value,omitempty"`
 	} `json:"finding_meta,omitempty"`
@@ -94,7 +94,7 @@ type Finding struct {
 	JiraCreation  *time.Time `json:"jira_creation,omitempty"`
 	JiraChange    *time.Time `json:"jira_change,omitempty"`
 	DisplayStatus *string    `json:"display_status,omitempty"`
-	FindingGroups []struct {
+	FindingGroups *[]struct {
 		Id        *int    `json:"id,omitempty"`
 		Name      *string `json:"name,omitempty"`
 		Test      *int    `json:"test,omitempty"`
@@ -168,21 +168,21 @@ type Finding struct {
 	Reporter                *int       `json:"reporter,omitempty"`
 	LastReviewedBy          *int       `json:"last_reviewed_by,omitempty"`
 	SonarqubeIssue          *int       `json:"sonarqube_issue,omitempty"`
-	Endpoints               []*int     `json:"endpoints,omitempty"`
-	EndpointStatus          []*int     `json:"endpoint_status,omitempty"`
-	Reviewers               []*int     `json:"reviewers,omitempty"`
-	Notes                   []*Note    `json:"notes,omitempty"`
-	Files                   []*int     `json:"files,omitempty"`
-	FoundBy                 []*int     `json:"found_by,omitempty"`
+	Endpoints               *[]int     `json:"endpoints,omitempty"`
+	EndpointStatus          *[]int     `json:"endpoint_status,omitempty"`
+	Reviewers               *[]int     `json:"reviewers,omitempty"`
+	Notes                   *[]Note    `json:"notes,omitempty"`
+	Files                   *[]int     `json:"files,omitempty"`
+	FoundBy                 *[]int     `json:"found_by,omitempty"`
 }
 
 type Findings struct {
 	Count    *int       `json:"count,omitempty"`
 	Next     *string    `json:"next,omitempty"`
 	Previous *string    `json:"previous,omitempty"`
-	Results  []*Finding `json:"results,omitempty"`
+	Results  *[]Finding `json:"results,omitempty"`
 	Prefetch *struct {
-		DuplicateFinding map[string]Finding `json:"duplicate_finding,omitempty"`
+		DuplicateFinding *map[string]Finding `json:"duplicate_finding,omitempty"`
 	} `json:"prefetch,omitempty"`
 }
 

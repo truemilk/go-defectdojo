@@ -15,7 +15,7 @@ type EngagementsService struct {
 
 type Engagement struct {
 	Id                         *int      `json:"id,omitempty"`
-	Tags                       []*string `json:"tags,omitempty"`
+	Tags                       *[]string `json:"tags,omitempty"`
 	Name                       *string   `json:"name,omitempty"`
 	Description                *string   `json:"description,omitempty"`
 	Version                    *string   `json:"version,omitempty"`
@@ -50,20 +50,20 @@ type Engagement struct {
 	BuildServer                *int      `json:"build_server,omitempty"`
 	SourceCodeManagementServer *int      `json:"source_code_management_server,omitempty"`
 	OrchestrationEngine        *int      `json:"orchestration_engine,omitempty"`
-	Notes                      []*Note   `json:"notes,omitempty"`
-	Files                      []*struct {
+	Notes                      *[]Note   `json:"notes,omitempty"`
+	Files                      *[]struct {
 		Id    *int    `json:"id,omitempty"`
 		File  *string `json:"file,omitempty"`
 		Title *string `json:"title,omitempty"`
 	} `json:"files,omitempty"`
-	RiskAcceptance []*int `json:"risk_acceptance,omitempty"`
+	RiskAcceptance *[]int `json:"risk_acceptance,omitempty"`
 }
 
 type Engagements struct {
 	Count    *int          `json:"count,omitempty"`
 	Next     *string       `json:"next,omitempty"`
 	Previous *string       `json:"previous,omitempty"`
-	Results  []*Engagement `json:"results,omitempty"`
+	Results  *[]Engagement `json:"results,omitempty"`
 }
 
 type EngagementsOptions struct {

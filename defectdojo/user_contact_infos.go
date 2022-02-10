@@ -31,9 +31,9 @@ type UserContactInfos struct {
 	Count    *int               `json:"count,omitempty"`
 	Next     *string            `json:"next,omitempty"`
 	Previous *string            `json:"previous,omitempty"`
-	Results  []*UserContactInfo `json:"results,omitempty"`
+	Results  *[]UserContactInfo `json:"results,omitempty"`
 	Prefetch *struct {
-		User map[string]User `json:"user,omitempty"`
+		User *map[string]User `json:"user,omitempty"`
 	} `json:"prefetch,omitempty"`
 }
 

@@ -29,7 +29,7 @@ type ImportScan struct {
 	TestTitle            *string   `json:"test_title,omitempty"`
 	AutoCreateContext    *bool     `json:"auto_create_context,omitempty"`
 	Lead                 *int      `json:"lead,omitempty"`
-	Tags                 []*string `json:"tags,omitempty"`
+	Tags                 *[]string `json:"tags,omitempty"`
 	CloseOldFindings     *bool     `json:"close_old_findings,omitempty"`
 	PushToJira           *bool     `json:"push_to_jira,omitempty"`
 	Environment          *string   `json:"environment,omitempty"`

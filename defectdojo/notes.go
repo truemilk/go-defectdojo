@@ -10,7 +10,7 @@ type Note struct {
 	Id      *int  `json:"id,omitempty"`
 	Author  *User `json:"author,omitempty"`
 	Editor  *User `json:"editor,omitempty"`
-	History []*struct {
+	History *[]struct {
 		Id            *int `json:"id,omitempty"`
 		CurrentEditor *struct {
 			Id        *int    `json:"id,omitempty"`
@@ -24,8 +24,8 @@ type Note struct {
 	} `json:"history,omitempty"`
 	Entry    *string    `json:"entry,omitempty"`
 	Date     *time.Time `json:"date,omitempty"`
-	Private  bool       `json:"private,omitempty"`
-	Edited   bool       `json:"edited,omitempty"`
+	Private  *bool      `json:"private,omitempty"`
+	Edited   *bool      `json:"edited,omitempty"`
 	EditTime *time.Time `json:"edit_time,omitempty"`
 	NoteType *int       `json:"note_type,omitempty"`
 }
@@ -34,5 +34,5 @@ type Notes *struct {
 	Count    *int    `json:"count,omitempty"`
 	Next     *string `json:"next,omitempty"`
 	Previous *string `json:"previous,omitempty"`
-	Results  []*Note `json:"results,omitempty"`
+	Results  *[]Note `json:"results,omitempty"`
 }

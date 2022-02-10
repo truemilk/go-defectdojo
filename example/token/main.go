@@ -27,8 +27,8 @@ func main() {
 	ctx := context.Background()
 
 	resp, err := dj.ApiTokenAuth.Create(ctx, &defectdojo.AuthToken{
-		Username: defectdojo.String("admin"),
-		Password: defectdojo.String("1Defectdojo@demo#appsec"),
+		Username: defectdojo.Str("admin"),
+		Password: defectdojo.Str("1Defectdojo@demo#appsec"),
 	})
 	if err != nil {
 		fmt.Println("main:", err)

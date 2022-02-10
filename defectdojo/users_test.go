@@ -19,20 +19,20 @@ func TestUsersService_List(t *testing.T) {
 
 	expected := Users{
 		Count:    Int(0),
-		Next:     String("string"),
-		Previous: String("string"),
-		Results: []*User{
+		Next:     Str("string"),
+		Previous: Str("string"),
+		Results: &[]User{
 			{
 				ID:          Int(0),
-				Username:    String("string"),
-				FirstName:   String("string"),
-				LastName:    String("string"),
-				Email:       String("user@example.com"),
+				Username:    Str("string"),
+				FirstName:   Str("string"),
+				LastName:    Str("string"),
+				Email:       Str("user@example.com"),
 				LastLogin:   Date(time.Date(2022, time.February, 4, 20, 4, 9, 950000000, time.UTC)),
 				IsActive:    Bool(true),
 				IsStaff:     Bool(true),
 				IsSuperuser: Bool(true),
-				Password:    String("string"),
+				Password:    Str("string"),
 			},
 		},
 	}
@@ -63,15 +63,15 @@ func TestUsersService_Read(t *testing.T) {
 
 	expected := User{
 		ID:          Int(123),
-		Username:    String("string"),
-		FirstName:   String("string"),
-		LastName:    String("string"),
-		Email:       String("user@example.com"),
+		Username:    Str("string"),
+		FirstName:   Str("string"),
+		LastName:    Str("string"),
+		Email:       Str("user@example.com"),
 		LastLogin:   Date(time.Date(2022, time.February, 3, 14, 34, 15, 85000000, time.UTC)),
 		IsActive:    Bool(true),
 		IsStaff:     Bool(true),
 		IsSuperuser: Bool(true),
-		Password:    String("string"),
+		Password:    Str("string"),
 	}
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

@@ -14,7 +14,7 @@ func TestApiTokenAuthService_Create(t *testing.T) {
 
 	response := `{"token":"token"}`
 
-	expected := AuthToken{Token: String("token")}
+	expected := AuthToken{Token: Str("token")}
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusCreated)
@@ -25,8 +25,8 @@ func TestApiTokenAuthService_Create(t *testing.T) {
 	dj, _ := NewDojoClient(ts.URL, "", nil)
 
 	actual, err := dj.ApiTokenAuth.Create(context.Background(), &AuthToken{
-		Username: String("username"),
-		Password: String("password"),
+		Username: Str("username"),
+		Password: Str("password"),
 	})
 	if !cmp.Equal(err, nil) {
 		t.Errorf("error: %s", err)
