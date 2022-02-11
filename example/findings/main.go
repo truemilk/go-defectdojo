@@ -28,6 +28,7 @@ func main() {
 		Offset:   5,
 		Prefetch: "duplicate_finding",
 	}
+
 	resp, err := dj.Findings.List(ctx, opts)
 	if err != nil {
 		fmt.Println("main:", err)

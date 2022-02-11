@@ -3,11 +3,14 @@ package defectdojo
 import (
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"mime/multipart"
 	"net/http"
 	"os"
+	"reflect"
+	"strings"
 )
 
 type ImportScanService struct {
@@ -47,12 +50,16 @@ type ImportScan struct {
 	ProductTypeId        *int      `json:"product_type_id,omitempty"`
 }
 
-type ImportScanMap map[string]string
+type importScanMap map[string]string
 
-func (c *ImportScanService) Create(ctx context.Context, m *ImportScanMap) (*ImportScan, error) {
+func (c *ImportScanService) Create(ctx context.Context, m *ImportScan) (*ImportScan, error) {
 	path := fmt.Sprintf("%s/import-scan/", c.client.BaseURL)
 
-	req, err := newFileUploadRequest(path, *m)
+	up, err := structTagToMap(*m)
+	if err != nil {
+		return nil, err
+	}
+	req, err := newFileUploadRequest(path, &up)
 	if err != nil {
 		return nil, err
 	}
@@ -67,11 +74,11 @@ func (c *ImportScanService) Create(ctx context.Context, m *ImportScanMap) (*Impo
 	return res, nil
 }
 
-func newFileUploadRequest(uri string, params ImportScanMap) (*http.Request, error) {
+func newFileUploadRequest(uri string, params *importScanMap) (*http.Request, error) {
 	body := new(bytes.Buffer)
 	writer := multipart.NewWriter(body)
 
-	for key, val := range params {
+	for key, val := range *params {
 		if key == "file" {
 			file, err := os.Open(val)
 			if err != nil {
@@ -114,4 +121,35 @@ func newFileUploadRequest(uri string, params ImportScanMap) (*http.Request, erro
 	r.Header.Set("Content-Type", writer.FormDataContentType())
 
 	return r, nil
+}
+
+func structTagToMap(in interface{}) (importScanMap, error) {
+	m := make(importScanMap)
+
+	v := reflect.ValueOf(in)
+	if v.Kind() == reflect.Ptr {
+		v = v.Elem()
+	}
+
+	t := v.Type()
+
+	for i := 0; i < v.NumField(); i++ {
+
+		tag := strings.Split(t.Field(i).Tag.Get("json"), ",")[0]
+		if len(tag) == 0 {
+			return nil, errors.New("tag not found")
+		}
+
+		value := v.Field(i).Interface()
+		if v.Field(i).IsZero() {
+			continue
+		}
+		if v.Field(i).Kind() == reflect.Ptr {
+			value = v.Field(i).Elem()
+		}
+
+		m[tag] = fmt.Sprintf("%v", value)
+	}
+
+	return m, nil
 }

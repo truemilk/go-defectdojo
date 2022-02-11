@@ -45,19 +45,6 @@ These should be used when passing parameters to methods that create/update/delet
 		User:         defectdojo.Int(1),
 	})
 
-One exception to the pattern above is made for "import-scan", where a map of strings is used for all parameters:
-
-	params := &defectdojo.ImportScanMap{
-		"scan_type":           "Trivy Scan",
-		"engagement_name":     "Today's Engagement",
-		"product_name":        "A Secure Product",
-		"product_type_name":   "Core Infrastructure",
-		"auto_create_context": "true",
-		"file":                "/tmp/trivy-output.json",
-	}
-
-	resp, err := dj.ImportScan.Create(ctx, params)
-
 NOTE: Using the context package, one can easily pass cancellation signals and deadlines to various services of the client for handling a request.
 In case there is no context available, then context.Background() can be used as a starting point.
 
