@@ -18,9 +18,6 @@ Define a new Defectdojo client:
 
 It is possible to specify a custom HTTP Transport when creating the client:
 
-	url := os.Getenv("DOJO_URI")
-	token := os.Getenv("DOJO_APIKEY")
-
 	client := &http.Client{
 		Timeout: time.Minute,
 		Transport: &http.Transport{
@@ -34,7 +31,7 @@ Then use the various methods to access the DefectDojo API.
 
 The services of a client divide the API into logical chunks and correspond to the structure of the DefectDojo API documentation.
 
-Auxiliary methods have are provided to facilitate the definition of parameters of Bool/String/Int/Int64 type.
+Auxiliary methods are provided to facilitate the definition of parameters of Bool/String/Int/Date/Slice type.
 These should be used when passing parameters to methods that create/update/delete objects.
 
 	ctx := context.Background()
@@ -52,7 +49,7 @@ Authentication
 
 The go-defectdojo library handles authentication via Token. You can retrieve a valid API v2 Key from within your DefectDojo instance.
 
-It is also possible to retrieve the API key from an un-authenticated call to the "/api-token-auth/" endpoint, specifying valid username and password.
+It is also possible to retrieve the API key from an un-authenticated call to the "/api-token-auth/" endpoint, specifying valid username and password as part of the posted data.
 For the purpose of this API call, the client can be instantiated with an empty string as the `token` parameter.
 
 	dj, _ := defectdojo.NewDojoClient(url, "", nil)

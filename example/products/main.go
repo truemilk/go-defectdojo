@@ -1,5 +1,5 @@
-// findings demonstrate how to retrieve the findings from DefectDojo.
-// Options are defined to specify the size of the page retrieved and the offset.
+// products demonstrate how to create a new Product in DefectDojo.
+// Details about the product are defined in a prod struct passed as an argument.
 package main
 
 import (

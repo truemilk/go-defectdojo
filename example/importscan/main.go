@@ -1,6 +1,6 @@
-// importscan demonstrates the process of uploading a scan report into the DefectDojo platform.
+// importscan demonstrates the process of uploading a scan report into DefectDojo.
 //
-// Reports to import are defined by an ImportScan struct.
+// Details of the import are defined by an ImportScan struct.
 package main
 
 import (
@@ -42,7 +42,7 @@ func main() {
 		ScanType:          defectdojo.Str("Trivy Scan"),
 		Tags:              defectdojo.Slice([]string{"AAAA", "BBBB"}),
 	}
-	
+
 	resp, err := dj.ImportScan.Create(ctx, scan)
 	if err != nil {
 		fmt.Println("main:", err)

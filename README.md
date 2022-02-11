@@ -1,6 +1,6 @@
 # go-defectdojo
 
-go-defectdojo is a Go client library for accessing the [DefectDojo API](https://defectdojo.github.io/django-DefectDojo/integrations/api-v2-docs/)
+__go-defectdojo__ is a Go client library for accessing the [DefectDojo API](https://defectdojo.github.io/django-DefectDojo/integrations/api-v2-docs/)
 
 ## Requirements ##
 
@@ -47,7 +47,7 @@ resp, err := dj.Findings.List(ctx, opts)
 
 More detailed documentation is available at: https://pkg.go.dev/github.com/truemilk/go-defectdojo/defectdojo
 
-For additional usage examples, brouse the [example](example) folder.
+For additional usage examples, browse the [example](example) folder.
 
 ## Roadmap ##
 

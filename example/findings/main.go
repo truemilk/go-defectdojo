@@ -1,5 +1,5 @@
 // findings demonstrate how to retrieve the findings from DefectDojo.
-// Options are defined to specify the size of the page retrieved and the offset.
+// Options are defined to specify the size of the page retrieved, the offset and what information to prefetch with the request.
 package main
 
 import (
