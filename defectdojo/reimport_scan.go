@@ -21,6 +21,7 @@ type ReImportScan struct {
 	ProductName                  *string   `json:"product_name,omitempty"`
 	EngagementName               *string   `json:"engagement_name,omitempty"`
 	CloseOldFindingsProductScope *bool     `json:"close_old_findings_product_scope,omitempty"`
+	DoNotReactivate              *bool     `json:"do_not_reactivate,omitempty"`
 	TestTitle                    *string   `json:"test_title,omitempty"`
 	AutoCreateContext            *bool     `json:"auto_create_context,omitempty"`
 	Lead                         *int      `json:"lead,omitempty"`
