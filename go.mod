@@ -1,4 +1,4 @@
-module github.com/hoferbeck/go-defectdojo
+module github.com/truemilk/go-defectdojo
 
 go 1.17
 
