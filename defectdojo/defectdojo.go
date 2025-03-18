@@ -23,10 +23,10 @@ type Client struct {
 	Engagements      *EngagementsService
 	Findings         *FindingsService
 	ImportScan       *ImportScanService
-	ReImportScan     *ReImportScanService
 	Notes            *NotesService
 	ProductTypes     *ProductTypesService
 	Products         *ProductsService
+	ReImportScan     *ReImportScanService
 	Technologies     *TechnologiesService
 	TestTypes        *TestTypesService
 	ToolTypes        *ToolTypesService
@@ -67,10 +67,10 @@ func NewDojoClient(dojourl string, token string, httpClient *http.Client) (*Clie
 	c.Engagements = &EngagementsService{client: c}
 	c.Findings = &FindingsService{client: c}
 	c.ImportScan = &ImportScanService{client: c}
-	c.ReImportScan = &ReImportScanService{client: c}
 	c.Notes = &NotesService{client: c}
 	c.ProductTypes = &ProductTypesService{client: c}
 	c.Products = &ProductsService{client: c}
+	c.ReImportScan = &ReImportScanService{client: c}
 	c.Technologies = &TechnologiesService{client: c}
 	c.TestTypes = &TestTypesService{client: c}
 	c.ToolTypes = &ToolTypesService{client: c}
