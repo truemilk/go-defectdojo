@@ -69,6 +69,8 @@ type Engagements struct {
 type EngagementsOptions struct {
 	Limit  int
 	Offset int
+	Product int
+	Name string
 }
 
 func (o *EngagementsOptions) ToString() string {
@@ -81,6 +83,12 @@ func (o *EngagementsOptions) ToString() string {
 		}
 		if o.Offset > 0 {
 			opts = append(opts, fmt.Sprintf("offset=%d", o.Offset))
+		}
+		if o.Product > 0 {
+			opts = append(opts, fmt.Sprintf("product=%d", o.Product))
+		}
+		if len(o.Name) > 0 {
+			opts = append(opts, fmt.Sprintf("name=%s", o.Name))
 		}
 		optsString += strings.Join(opts, "&")
 	}
