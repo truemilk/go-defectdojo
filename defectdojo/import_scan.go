@@ -5,7 +5,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"mime/multipart"
 	"net/http"
 	"os"
@@ -84,7 +84,7 @@ func newFileUploadRequest(uri string, params *importScanMap) (*http.Request, err
 			if err != nil {
 				return nil, err
 			}
-			fileContents, err := ioutil.ReadAll(file)
+			fileContents, err := io.ReadAll(file)
 			if err != nil {
 				return nil, err
 			}
@@ -104,6 +104,10 @@ func newFileUploadRequest(uri string, params *importScanMap) (*http.Request, err
 			if err != nil {
 				return nil, err
 			}
+		} else if(key == "tags") {
+			t := strings.Trim(val, "[")
+			t = strings.Trim(t, "]")
+			writer.WriteField(key, t)
 		} else {
 			_ = writer.WriteField(key, val)
 		}

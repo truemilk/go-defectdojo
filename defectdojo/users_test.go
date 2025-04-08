@@ -90,3 +90,64 @@ func TestUsersService_Read(t *testing.T) {
 		t.Errorf("should have been equal, %+v, %+v", actual, &expected)
 	}
 }
+package defectdojo
+
+import (
+	"context"
+	"testing"
+	"time"
+)
+
+func TestUsersService_List_TableDriven(t *testing.T) {
+	tests := []struct {
+		name          string
+		responseCode  int
+		responseBody  string
+		expectError   bool
+	}{
+		{
+			name:         "valid response",
+			responseCode: http.StatusOK,
+			responseBody: `{"count":1,"results":[{"id": 123, "username": "test"}]}`,
+			expectError:  false,
+		},
+		{
+			name:         "malformed JSON",
+			responseCode: http.StatusOK,
+			responseBody: `invalid json`,
+			expectError:  true,
+		},
+		{
+			name:         "HTTP error",
+			responseCode: http.StatusInternalServerError,
+			responseBody: `{"detail": "server error"}`,
+			expectError:  true,
+		},
+	}
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			ts := NewTestServer(tc.responseCode, tc.responseBody)
+			defer ts.Close()
+			client, _ := NewDojoClient(ts.URL, "dummy", nil)
+			_, err := client.Users.List(context.Background(), nil)
+			if tc.expectError && err == nil {
+				t.Errorf("expected error, got nil")
+			}
+			if !tc.expectError && err != nil {
+				t.Errorf("unexpected error: %v", err)
+			}
+		})
+	}
+}
+
+func TestContextCancellation(t *testing.T) {
+	ts := NewTestServer(http.StatusOK, `{}`)
+	defer ts.Close()
+	client, _ := NewDojoClient(ts.URL, "dummy", nil)
+	ctx, cancel := context.WithTimeout(context.Background(), 50*time.Millisecond)
+	defer cancel()
+	_, err := client.Users.List(ctx, nil)
+	if err == nil {
+		t.Errorf("expected context deadline exceeded error")
+	}
+}
