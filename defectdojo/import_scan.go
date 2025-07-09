@@ -79,7 +79,8 @@ func newFileUploadRequest(uri string, params *importScanMap) (*http.Request, err
 	writer := multipart.NewWriter(body)
 
 	for key, val := range *params {
-		if key == "file" {
+		switch key {
+		case "file":
 			file, err := os.Open(val)
 			if err != nil {
 				return nil, err
@@ -104,11 +105,11 @@ func newFileUploadRequest(uri string, params *importScanMap) (*http.Request, err
 			if err != nil {
 				return nil, err
 			}
-		} else if(key == "tags") {
+		case "tags":
 			t := strings.Trim(val, "[")
 			t = strings.Trim(t, "]")
-			writer.WriteField(key, t)
-		} else {
+			_ = writer.WriteField(key, t)
+		default:
 			_ = writer.WriteField(key, val)
 		}
 	}
