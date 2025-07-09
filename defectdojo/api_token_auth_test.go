@@ -18,7 +18,7 @@ func TestApiTokenAuthService_Create(t *testing.T) {
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusCreated)
-		fmt.Fprintln(w, response)
+		_, _ = fmt.Fprintln(w, response)
 	}))
 	defer ts.Close()
 

@@ -97,7 +97,7 @@ func (c *Client) sendRequest(req *http.Request, v interface{}) error {
 	if err != nil {
 		return fmt.Errorf("sendRequest: cannot send request: %w", err)
 	}
-	defer res.Body.Close()
+	defer func() { _ = res.Body.Close() }()
 
 	if res.StatusCode < http.StatusOK || res.StatusCode >= http.StatusBadRequest {
 		errorResp := errorResponse{
