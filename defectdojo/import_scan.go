@@ -31,6 +31,7 @@ type ImportScan struct {
 	Engagement           *int      `json:"engagement,omitempty"`
 	TestTitle            *string   `json:"test_title,omitempty"`
 	AutoCreateContext    *bool     `json:"auto_create_context,omitempty"`
+	DeduplicationOnEngagement  *bool     `json:"deduplication_on_engagement,omitempty"`
 	Lead                 *int      `json:"lead,omitempty"`
 	Tags                 *[]string `json:"tags,omitempty"`
 	CloseOldFindings     *bool     `json:"close_old_findings,omitempty"`
