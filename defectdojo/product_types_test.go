@@ -80,7 +80,7 @@ func TestProductTypesService_List(t *testing.T) {
 		if !strings.Contains(r.URL.Path, "/product_types/") {
 			t.Errorf("Expected /product_types/ in path, got %s", r.URL.Path)
 		}
-		fmt.Fprintln(w, response)
+		_, _ = fmt.Fprintln(w, response)
 	}))
 	defer ts.Close()
 
@@ -131,7 +131,7 @@ func TestProductTypesService_Read(t *testing.T) {
 		if !strings.Contains(r.URL.Path, "/product_types/123/") {
 			t.Errorf("Expected /product_types/123/ in path, got %s", r.URL.Path)
 		}
-		fmt.Fprintln(w, response)
+		_, _ = fmt.Fprintln(w, response)
 	}))
 	defer ts.Close()
 
@@ -180,7 +180,7 @@ func TestProductTypesService_Create(t *testing.T) {
 			t.Errorf("Expected /product_types/ in path, got %s", r.URL.Path)
 		}
 		w.WriteHeader(http.StatusCreated)
-		fmt.Fprintln(w, response)
+		_, _ = fmt.Fprintln(w, response)
 	}))
 	defer ts.Close()
 
@@ -233,7 +233,7 @@ func TestProductTypesService_Update(t *testing.T) {
 		if !strings.Contains(r.URL.Path, "/product_types/789/") {
 			t.Errorf("Expected /product_types/789/ in path, got %s", r.URL.Path)
 		}
-		fmt.Fprintln(w, response)
+		_, _ = fmt.Fprintln(w, response)
 	}))
 	defer ts.Close()
 
@@ -286,7 +286,7 @@ func TestProductTypesService_PartialUpdate(t *testing.T) {
 		if !strings.Contains(r.URL.Path, "/product_types/321/") {
 			t.Errorf("Expected /product_types/321/ in path, got %s", r.URL.Path)
 		}
-		fmt.Fprintln(w, response)
+		_, _ = fmt.Fprintln(w, response)
 	}))
 	defer ts.Close()
 
@@ -313,7 +313,7 @@ func TestProductTypesService_Delete(t *testing.T) {
 			t.Errorf("Expected /product_types/654/ in path, got %s", r.URL.Path)
 		}
 		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprintln(w, "{}")
+		_, _ = fmt.Fprintln(w, "{}")
 	}))
 	defer ts.Close()
 
