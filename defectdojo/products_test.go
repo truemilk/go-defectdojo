@@ -380,7 +380,7 @@ func TestProductsService_Delete(t *testing.T) {
 			t.Errorf("Expected /products/789/ in path, got %s", r.URL.Path)
 		}
 		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprintln(w, "{}")
+		_, _ = fmt.Fprintln(w, "{}")
 	}))
 	defer ts.Close()
 
