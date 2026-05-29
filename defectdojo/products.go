@@ -109,19 +109,72 @@ type Products struct {
 
 // ProductsOptions contains optional parameters for filtering and paginating products.
 type ProductsOptions struct {
-	// Limit specifies the maximum number of products to return (default: 20)
+	// Limit is the number of results to return per page.
 	Limit int
-	// Offset specifies the starting position for pagination
+	// Offset is the initial index from which to return the results.
 	Offset int
-	// Name filters products by name (partial match)
+	// BusinessCriticality filters by business criticality (very high, high, medium, low, very low, none).
+	BusinessCriticality string
+	// Created filters by creation date (1=Today, 2=Past 7 days, 3=Past 30 days, 4=Past 90 days, 5=Current month, 6=Current year, 7=Past year).
+	Created string
+	// Description filters products by description.
+	Description string
+	// ExternalAudience filters by external audience flag.
+	ExternalAudience string
+	// HasTags filters products that have tags.
+	HasTags string
+	// ID filters by product ID. Multiple values may be separated by commas.
+	ID string
+	// InternetAccessible filters by internet accessible flag.
+	InternetAccessible string
+	// Lifecycle filters by lifecycle stage (construction, production, retirement).
+	Lifecycle string
+	// Name filters products by name.
 	Name string
-	// Prefetch specifies related objects to include in the response to reduce API calls
+	// NameExact filters products by exact name match.
+	NameExact string
+	// NotTag filters by tag name that should not be present (contains match).
+	NotTag string
+	// NotTags is a comma separated list of exact tags not present on product.
+	NotTags string
+	// O specifies ordering. Prefix with - for descending. Valid fields: id, tid, name, created, prod_numeric_grade, business_criticality, platform, lifecycle, origin, revenue, external_audience, internet_accessible, product_manager, technical_contact, team_manager, prod_type, updated, user_records.
+	O string
+	// Origin filters by origin (third party library, purchased, contractor, internal, open source, outsourced).
+	Origin string
+	// OutsideOfSla filters by outside of SLA status.
+	OutsideOfSla string
+	// Platform filters by platform (web service, desktop, iot, mobile, web).
+	Platform string
+	// Prefetch is a list of fields for which to prefetch model instances and add those to the response.
 	Prefetch string
+	// ProdNumericGrade filters by product numeric grade. Multiple values may be separated by commas.
+	ProdNumericGrade string
+	// ProdType filters by product type ID. Multiple values may be separated by commas.
+	ProdType string
+	// ProductManager filters by product manager user ID. Multiple values may be separated by commas.
+	ProductManager string
+	// Regulations filters by regulation ID. Multiple values may be separated by commas.
+	Regulations string
+	// Revenue filters by revenue.
+	Revenue string
+	// Tag filters by tag name (contains match).
+	Tag string
+	// Tags is a comma separated list of exact tags (uses OR for multiple values).
+	Tags string
+	// TagsAnd is a comma separated list of exact tags to match with an AND expression.
+	TagsAnd string
+	// TeamManager filters by team manager user ID. Multiple values may be separated by commas.
+	TeamManager string
+	// TechnicalContact filters by technical contact user ID. Multiple values may be separated by commas.
+	TechnicalContact string
+	// Tid filters by tid. Multiple values may be separated by commas.
+	Tid string
+	// Updated filters by update date (1=Today, 2=Past 7 days, 3=Past 30 days, 4=Past 90 days, 5=Current month, 6=Current year, 7=Past year).
+	Updated string
+	// UserRecords filters by user records. Multiple values may be separated by commas.
+	UserRecords string
 }
 
-// ToString converts ProductsOptions to a URL query string for API requests.
-// It returns an empty string if no options are set, otherwise returns a query string
-// starting with '?' and containing the appropriate parameters.
 func (o *ProductsOptions) ToString() string {
 	var opts []string
 	var optsString string
@@ -133,11 +186,95 @@ func (o *ProductsOptions) ToString() string {
 		if o.Offset > 0 {
 			opts = append(opts, fmt.Sprintf("offset=%d", o.Offset))
 		}
+		if len(o.BusinessCriticality) > 0 {
+			opts = append(opts, fmt.Sprintf("business_criticality=%s", o.BusinessCriticality))
+		}
+		if len(o.Created) > 0 {
+			opts = append(opts, fmt.Sprintf("created=%s", o.Created))
+		}
+		if len(o.Description) > 0 {
+			opts = append(opts, fmt.Sprintf("description=%s", o.Description))
+		}
+		if len(o.ExternalAudience) > 0 {
+			opts = append(opts, fmt.Sprintf("external_audience=%s", o.ExternalAudience))
+		}
+		if len(o.HasTags) > 0 {
+			opts = append(opts, fmt.Sprintf("has_tags=%s", o.HasTags))
+		}
+		if len(o.ID) > 0 {
+			opts = append(opts, fmt.Sprintf("id=%s", o.ID))
+		}
+		if len(o.InternetAccessible) > 0 {
+			opts = append(opts, fmt.Sprintf("internet_accessible=%s", o.InternetAccessible))
+		}
+		if len(o.Lifecycle) > 0 {
+			opts = append(opts, fmt.Sprintf("lifecycle=%s", o.Lifecycle))
+		}
 		if len(o.Name) > 0 {
 			opts = append(opts, fmt.Sprintf("name=%s", o.Name))
 		}
+		if len(o.NameExact) > 0 {
+			opts = append(opts, fmt.Sprintf("name_exact=%s", o.NameExact))
+		}
+		if len(o.NotTag) > 0 {
+			opts = append(opts, fmt.Sprintf("not_tag=%s", o.NotTag))
+		}
+		if len(o.NotTags) > 0 {
+			opts = append(opts, fmt.Sprintf("not_tags=%s", o.NotTags))
+		}
+		if len(o.O) > 0 {
+			opts = append(opts, fmt.Sprintf("o=%s", o.O))
+		}
+		if len(o.Origin) > 0 {
+			opts = append(opts, fmt.Sprintf("origin=%s", o.Origin))
+		}
+		if len(o.OutsideOfSla) > 0 {
+			opts = append(opts, fmt.Sprintf("outside_of_sla=%s", o.OutsideOfSla))
+		}
+		if len(o.Platform) > 0 {
+			opts = append(opts, fmt.Sprintf("platform=%s", o.Platform))
+		}
 		if len(o.Prefetch) > 0 {
 			opts = append(opts, fmt.Sprintf("prefetch=%s", o.Prefetch))
+		}
+		if len(o.ProdNumericGrade) > 0 {
+			opts = append(opts, fmt.Sprintf("prod_numeric_grade=%s", o.ProdNumericGrade))
+		}
+		if len(o.ProdType) > 0 {
+			opts = append(opts, fmt.Sprintf("prod_type=%s", o.ProdType))
+		}
+		if len(o.ProductManager) > 0 {
+			opts = append(opts, fmt.Sprintf("product_manager=%s", o.ProductManager))
+		}
+		if len(o.Regulations) > 0 {
+			opts = append(opts, fmt.Sprintf("regulations=%s", o.Regulations))
+		}
+		if len(o.Revenue) > 0 {
+			opts = append(opts, fmt.Sprintf("revenue=%s", o.Revenue))
+		}
+		if len(o.Tag) > 0 {
+			opts = append(opts, fmt.Sprintf("tag=%s", o.Tag))
+		}
+		if len(o.Tags) > 0 {
+			opts = append(opts, fmt.Sprintf("tags=%s", o.Tags))
+		}
+		if len(o.TagsAnd) > 0 {
+			opts = append(opts, fmt.Sprintf("tags__and=%s", o.TagsAnd))
+		}
+		if len(o.TeamManager) > 0 {
+			opts = append(opts, fmt.Sprintf("team_manager=%s", o.TeamManager))
+		}
+		if len(o.TechnicalContact) > 0 {
+			opts = append(opts, fmt.Sprintf("technical_contact=%s", o.TechnicalContact))
+		}
+		if len(o.Tid) > 0 {
+			opts = append(opts, fmt.Sprintf("tid=%s", o.Tid))
+		}
+		if len(o.Updated) > 0 {
+			opts = append(opts, fmt.Sprintf("updated=%s", o.Updated))
+		}
+		if len(o.UserRecords) > 0 {
+			opts = append(opts, fmt.Sprintf("user_records=%s", o.UserRecords))
 		}
 		optsString += strings.Join(opts, "&")
 	}

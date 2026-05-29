@@ -67,10 +67,10 @@ type Engagements struct {
 }
 
 type EngagementsOptions struct {
-	Limit  int
-	Offset int
+	Limit   int
+	Offset  int
 	Product int
-	Name string
+	Name    string
 }
 
 func (o *EngagementsOptions) ToString() string {
@@ -139,6 +139,28 @@ func (c *EngagementsService) Create(ctx context.Context, u *Engagement) (*Engage
 		return nil, err
 	}
 	req, err := http.NewRequest(http.MethodPost, path, bytes.NewBuffer(postJSON))
+	if err != nil {
+		return nil, err
+	}
+
+	req = req.WithContext(ctx)
+
+	res := new(Engagement)
+	if err := c.client.sendRequest(req, &res); err != nil {
+		return nil, err
+	}
+
+	return res, nil
+}
+
+func (c *EngagementsService) PartialUpdate(ctx context.Context, id int, u *Engagement) (*Engagement, error) {
+	path := fmt.Sprintf("%s/engagements/%d/", c.client.BaseURL, id)
+
+	postJSON, err := json.Marshal(u)
+	if err != nil {
+		return nil, err
+	}
+	req, err := http.NewRequest(http.MethodPatch, path, bytes.NewBuffer(postJSON))
 	if err != nil {
 		return nil, err
 	}
